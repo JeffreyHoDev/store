@@ -1,0 +1,57 @@
+.request_item_container {
+    
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.1rem;
+    margin-left: 2rem;
+}
+
+.add_item-btn {
+    width: max-content;
+    border: none;
+    background-color: rgb(75, 55, 255);
+    color: white;
+    font-weight: 700;
+    padding: .3rem .9rem;
+}
+
+.insert_item-btn {
+    width: max-content;
+    border: none;
+    background-color: rgb(112, 231, 0);
+    padding: .5rem .6rem;
+}
+
+.request_item_list {
+    display: flex;
+    flex-direction: column;
+    row-gap: .8rem;
+}
+
+.request_item_item {
+    display: flex;
+    column-gap: .2rem;
+}
+
+div input {
+    margin-left: .4rem;
+    width: max-content;
+}
+
+.submit-btn {
+    width: max-content;
+    border: none;
+    background-color: rgb(162, 245, 68);
+    color: whitesmoke;
+    font-weight: 800;
+    padding: .5rem .8rem;
+
+    &:hover {
+        width: max-content;
+        border: none;
+        background-color: rgb(0, 184, 55);
+        color: whitesmoke;
+        font-weight: 800;
+        padding: .5rem .8rem;
+    }
+}

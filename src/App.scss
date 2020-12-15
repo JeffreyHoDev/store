@@ -1,0 +1,10 @@
+.App {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: .8rem;
+  }
+}

@@ -1,0 +1,14 @@
+.homepage {
+
+    &-layout {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+
+    &-card {
+        height: 15vh;
+        width: 100%;
+    }
+
+}

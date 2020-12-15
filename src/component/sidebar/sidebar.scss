@@ -1,0 +1,19 @@
+.sidebar {
+    height: 100vh;
+    min-width: max-content;
+    background-color: red;
+
+
+    &-nav {
+        display: flex;
+        flex-direction: column;
+        align-content: space-evenly;
+
+        &-item {
+            font-size: 1rem;
+            color: black;
+            padding: 1.1rem 1.2rem;
+            margin: .3rem 2.5rem;
+        }
+    }
+}
