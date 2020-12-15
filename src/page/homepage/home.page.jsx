@@ -1,24 +1,15 @@
 import React from 'react'
 import './home.scss'
 
+import { Card } from 'react-bootstrap'
+
 const HomePage = () => {
     return (
-        <div className='homepage'>
-            <div className='homepage-layout'>
-                <div className='homepage-card'>
-                    Some Chart here
-                </div>
-                <div className='homepage-card'>
-                    Some Chart here
-                </div>
-                <div className='homepage-card'>
-                    Some Chart here
-                </div>
-                <div className='homepage-card'>
-                    Some Chart here
-                </div>
+        <Card>
+            <div>
+                Some chart here!
             </div>
-        </div>
+        </Card>
     )
 }
 

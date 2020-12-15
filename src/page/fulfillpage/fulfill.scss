@@ -1,15 +1,34 @@
 .fulfill-page {
-    font-size: .8rem;
-    margin-left: 1.5rem;
+    font-size: medium;
+    margin: 1.1rem 1rem;
 }
 
-.fulfill-table {
+.fulfill-title {
+    margin-bottom: 1rem;
+    color: black;
+}
 
-    &-row {
-        padding: 4rem;
+.fulfill_others {
+    margin-top: 1.2rem;
+    color: black;
+
+    & label {
+        text-decoration: underline;
+        margin-bottom: .8rem;
+        font-weight: 800;
     }
 
-    &-cell {
-        padding: 1.5rem;
+    & h5 {
+        margin-bottom: .9rem;
+    }
+}
+
+.action-container {
+    display: flex;
+    flex-direction: column;
+
+    & button {
+        width: max-content;
+        margin-bottom: .6rem;
     }
 }

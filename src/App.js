@@ -8,7 +8,8 @@ import FulfillPage from './page/fulfillpage/fulfill.page';
 
 // Start importing page components
 import HomePage from './page/homepage/home.page'
-import RequestItemPage from './page/request_item_page/request_item.page';
+import RequestItemPage from './page/requestitempage/request_item.page';
+import RequestListPage from './page/requestlistpage/requestlist.page';
 // End importing page components
 
 
@@ -21,7 +22,8 @@ function App() {
         <Topbar />
         {/* <HomePage /> */}
         {/* <RequestItemPage /> */}
-        <FulfillPage />
+        {/* <FulfillPage /> */}
+        <RequestListPage />
       </div>
     </div>
   );
