@@ -9,27 +9,57 @@ import FulfillPage from './page/fulfillpage/fulfill.page';
 
 // Start importing page components
 import HomePage from './page/homepage/home.page'
+import LoginPage from './page/loginpage/login.page';
 import RequestItemPage from './page/requestitempage/request_item.page';
 import RequestListPage from './page/requestlistpage/requestlist.page';
 import StoreListPage from './page/storelistpage/storelist.page';
 // End importing page components
 
-
+// Start Importing React Router
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import EditItemPage from './page/edititempage/edititem.page';
+// End Importing React Router
 
 function App() {
   return (
-    <div className="App">
-      <Sidebar />
-      <div className='App-content'>
-        <Topbar />
-        {/* <HomePage /> */}
-        {/* <RequestItemPage /> */}
-        {/* <FulfillPage /> */}
-        {/* <RequestListPage /> */}
-        {/* <StoreListPage /> */}
-        <AddItemPage />
+    <Router>
+      <div className="App">
+        <div className='App-content'>
+          <Sidebar />
+          <Topbar />
+          <div className='main'>
+              <Route exact path='/'>
+                <HomePage />
+              </Route>
+              <Route path='/request_item'>
+                <RequestItemPage />
+              </Route>
+              <Route path='/fulfill/:request_id'>
+                <FulfillPage />
+              </Route>
+              <Route path='/request_list'>
+                <RequestListPage />
+              </Route>
+              <Route path='/add_item'>
+                <AddItemPage />
+              </Route>
+              <Route path='/store_list'>
+                <StoreListPage />
+              </Route>
+              <Route path='/login'>
+                <LoginPage />
+              </Route>
+              <Route path='/edit/:item_id'>
+                <EditItemPage />
+              </Route>
+          </div>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

@@ -1,11 +1,14 @@
 .App {
-  display: grid;
-  grid-template-columns: max-content 1fr;
 
   &-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: .8rem;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 1fr 10fr;    
   }
+
 }
 
+.main {
+  grid-row: 2/-1;
+  grid-column: 2/-1;
+}

@@ -1,8 +1,7 @@
 .sidebar {
     height: 100vh;
-    min-width: max-content;
+    grid-row: 1/-1;
     background-color: red;
-
 
     &-nav {
         display: flex;
@@ -11,9 +10,14 @@
 
         &-item {
             font-size: 1rem;
-            color: black;
-            padding: 1.1rem 1.2rem;
+            color: white;
+            padding: 1.1rem 0.9rem;
             margin: .3rem 2.5rem;
+            
+            &:hover {
+                text-decoration: none;
+            }
+
         }
     }
 }

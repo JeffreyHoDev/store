@@ -2,11 +2,13 @@ import React from 'react'
 import './fulfill.scss'
 
 import { ListGroup } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
 
 const FulfillPage = () => {
+    const { request_id } = useParams()
     return (
         <div className='fulfill-page'>
-            <h2 className='fulfill-title'>Request ID #1</h2>
+            <h2 className='fulfill-title'>Request ID: {request_id}</h2>
             <ListGroup variant="flush">
                 <ListGroup.Item>1- Item A - 30</ListGroup.Item>
                 <ListGroup.Item>2- Item B - 30</ListGroup.Item>

@@ -2,6 +2,7 @@ import React from 'react'
 import './storelist.scss'
 
 import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom' 
 
 const StoreListPage = () => {
     return (
@@ -25,7 +26,7 @@ const StoreListPage = () => {
                         <td>20</td>
                         <td>Product</td>
                         <td>Brand A</td>
-                        <td><button>Edit</button></td>
+                        <td><Link to='/edit/1'>Edit</Link></td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -33,7 +34,7 @@ const StoreListPage = () => {
                         <td>30</td>
                         <td>Accessories</td>
                         <td>Brand B</td>
-                        <td><button>Edit</button></td>
+                        <td><Link to='/edit/2'>Edit</Link></td>
                     </tr>
                     <tr>
                         <td>3</td>
@@ -41,7 +42,7 @@ const StoreListPage = () => {
                         <td>40</td>
                         <td>Asset</td>
                         <td>Brand C</td>
-                        <td><button>Edit</button></td>
+                        <td><Link to='/edit/3'>Edit</Link></td>
                     </tr>
                 </tbody>
             </Table>
