@@ -18,7 +18,6 @@ import StoreListPage from './page/storelistpage/storelist.page';
 // Start Importing React Router
 import {
   BrowserRouter as Router,
-  Switch,
   Route
 } from "react-router-dom";
 import EditItemPage from './page/edititempage/edititem.page';

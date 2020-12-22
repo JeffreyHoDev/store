@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 const RequestListPage = () => {
     return (
         <div className='requestlist_page'>
+            <h3>Request List</h3>
             <Table striped bordered hover>
                 <thead>
                     <tr>

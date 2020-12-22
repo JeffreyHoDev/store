@@ -1,13 +1,14 @@
 import React from 'react'
 import './storelist.scss'
 
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom' 
 
 const StoreListPage = () => {
     return (
         <div className="storelist_page">
             <h2 className="storelist_title">Inhouse List</h2>
+            <Button variant='info' className='addItem_btn'>Add Item</Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>

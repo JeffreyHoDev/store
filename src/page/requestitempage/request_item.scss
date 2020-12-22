@@ -1,7 +1,29 @@
-.request_item_page {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-left: 1rem;
-    margin-top: 1rem;
+.request_item {
+
+    &_page {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    &_others {
+        display: flex;
+        column-gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    &_projectContainer {
+        display: flex;
+        column-gap: 0.8rem;
+    }
+
+    &_collectiondateContainer {
+        display: flex;
+        column-gap: 0.8rem;
+    }
 }
+
 
