@@ -1,10 +1,14 @@
 import { Table } from 'react-bootstrap'
-import React from 'react'
+import React, { useState } from 'react'
 import './request_item.scss'
 
 import RequestItemSummary from '../../component/request_item_summary/request_item_summary.component'
 
+
 const RequestItemPage = () => {
+
+    let [quantity, handle_quantity_input] = useState(0)
+
     return (
         <div className='request_item_page'>
             <div className='request_content'>
