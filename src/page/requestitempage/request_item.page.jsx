@@ -7,7 +7,15 @@ import RequestItemSummary from '../../component/request_item_summary/request_ite
 
 const RequestItemPage = () => {
 
-    let [quantity, handle_quantity_input] = useState(0)
+    let databaseData = [
+        {
+            "item": "item A",
+            "request_quantity": 0
+        },
+        {
+            "item": "item B"
+        }
+    ]
 
     return (
         <div className='request_item_page'>
@@ -25,7 +33,7 @@ const RequestItemPage = () => {
                         <tr>
                             <td>1</td>
                             <td>Item A</td>
-                            <td><input type='number' min='0'></input></td>
+                            <td><input type='number' min='0' id="0" onChange={(event) => {databaseData[event.target.id]["request_quantity"] = event.target.value}}></input></td>
                             <td><button>Add</button></td>
                         </tr>
                         <tr>
