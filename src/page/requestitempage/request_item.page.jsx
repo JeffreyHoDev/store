@@ -1,11 +1,12 @@
 import { Table } from 'react-bootstrap'
-import React, { useState } from 'react'
+import React from 'react'
 import './request_item.scss'
 
 import RequestItemSummary from '../../component/request_item_summary/request_item_summary.component'
 
+import { connect } from 'react-redux'
 
-const RequestItemPage = () => {
+const RequestItemPage = ({add_to_summary}) => {
 
     let databaseData = [
         {
@@ -13,7 +14,8 @@ const RequestItemPage = () => {
             "request_quantity": 0
         },
         {
-            "item": "item B"
+            "item": "item B",
+            "request_quantity": 0
         }
     ]
 
@@ -34,7 +36,7 @@ const RequestItemPage = () => {
                             <td>1</td>
                             <td>Item A</td>
                             <td><input type='number' min='0' id="0" onChange={(event) => {databaseData[event.target.id]["request_quantity"] = event.target.value}}></input></td>
-                            <td><button>Add</button></td>
+                            <td><button onClick={() => add_to_summary(databaseData[0])}>Add</button></td>
                         </tr>
                         <tr>
                             <td>2</td>
@@ -69,4 +71,8 @@ const RequestItemPage = () => {
     )
 }
 
-export default RequestItemPage
+const mapDispatchToProps = dispatch => ({
+    add_to_summary: (item) => dispatch({type: "ADD_TO_SUMMARY", payload: item})
+})
+
+export default connect(null, mapDispatchToProps)(RequestItemPage)

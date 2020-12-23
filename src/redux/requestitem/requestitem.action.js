@@ -1,4 +1,4 @@
-const ADD_TO_SUMMARY = (payload) => ({
+const ADD_TO_SUMMARY = (item) => ({
     type: "ADD_TO_SUMMARY",
-    payload: payload
+    payload: item
 })

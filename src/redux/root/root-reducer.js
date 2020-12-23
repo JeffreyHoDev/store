@@ -3,7 +3,7 @@ import RequestItemReducer from '../requestitem/requestitem.reducer'
 
 
 const rootReducer = combineReducers({
-    RequestItemReducer
+    RequestItemReducer: RequestItemReducer
 })
 
 export default rootReducer

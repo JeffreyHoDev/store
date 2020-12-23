@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    summaryItems: {}
+    summaryItems: []
 }
 
 
@@ -8,7 +8,7 @@ const RequestItemReducer = (state=INITIAL_STATE, action) => {
         case "ADD_TO_SUMMARY":
             return {
                 ...state,
-                summaryItems: action.payload
+                summaryItems: state.summaryItems.concat(action.payload)
             }
         default:
             return state
