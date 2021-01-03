@@ -19,6 +19,14 @@ const RequestItemReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 summaryItems: state.summaryItems.concat(action.payload)
             }
+        case "REMOVE_FROM_SUMMARY":
+            let newArray = state.summaryItems.filter(item => {
+                return item.name !== action.payload.name
+            })
+            return {
+                ...state,
+                summaryItems: [].concat(newArray)
+            }
         default:
             return state
     }

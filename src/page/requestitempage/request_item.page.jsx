@@ -18,23 +18,19 @@ const RequestItemPage = ({add_to_summary}) => {
         ...request_quantity,
         [item_name]: event.target.value
     })
-    console.log(request_quantity)
 
     let databaseData = [
         {
             "name": "item A",
-            "id": 0,
-            "request_quantity": 0
+            "id": 0
         },
         {
             "name": "item B",
-            "id": 1,
-            "request_quantity": 0
+            "id": 1
         },
         {
             "name": "item C",
-            "id": 2,
-            "request_quantity": 0
+            "id": 2
         },
     ]
 
