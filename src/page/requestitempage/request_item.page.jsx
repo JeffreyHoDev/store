@@ -1,27 +1,47 @@
 import { Table } from 'react-bootstrap'
-import React from 'react'
+import React, { useState } from 'react'
 import './request_item.scss'
 
 import RequestItemSummary from '../../component/request_item_summary/request_item_summary.component'
 
 import { connect } from 'react-redux'
 
+import { ADD_TO_SUMMARY } from '../../redux/requestitem/requestitem.action'
+
 const RequestItemPage = ({add_to_summary}) => {
+
+    const [request_quantity, handleRequestQuantity] = useState({})
+    const [project_name, handleProjectName] = useState('')
+    const [collection_date, handleCollectionDate] = useState('')
+
+    const handleDynamicInput = (event, item_name) => handleRequestQuantity({
+        ...request_quantity,
+        [item_name]: event.target.value
+    })
+    console.log(request_quantity)
 
     let databaseData = [
         {
-            "item": "item A",
+            "name": "item A",
+            "id": 0,
             "request_quantity": 0
         },
         {
-            "item": "item B",
+            "name": "item B",
+            "id": 1,
             "request_quantity": 0
-        }
+        },
+        {
+            "name": "item C",
+            "id": 2,
+            "request_quantity": 0
+        },
     ]
 
     return (
         <div className='request_item_page'>
             <div className='request_content'>
+                <h2>Request Item</h2>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -32,34 +52,28 @@ const RequestItemPage = ({add_to_summary}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Item A</td>
-                            <td><input type='number' min='0' id="0" onChange={(event) => {databaseData[event.target.id]["request_quantity"] = event.target.value}}></input></td>
-                            <td><button onClick={() => add_to_summary(databaseData[0])}>Add</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Item B</td>
-                            <td><input type='number' min='0'></input></td>
-                            <td><button>Add</button></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Item C</td>
-                            <td><input type='number' min='0'></input></td>
-                            <td><button>Add</button></td>
-                        </tr>
+                        {
+                            databaseData.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.id}</td>
+                                        <td>{item.name}</td>
+                                        <td><input type='number' min='0' id={item.id} onChange={(event) => handleDynamicInput(event, item.name)}></input></td>
+                                        <td><button onClick={() => add_to_summary({name: item.name, quantity: request_quantity[item.name]})}>Add</button></td>
+                                    </tr> 
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
                 <div className='request_item_others'>
                     <div className='request_item_projectContainer'>
                         <label htmlFor='project'>Project:</label>
-                        <input type='text'></input>
+                        <input type='text' onChange={(event) => handleProjectName(event.target.value)}></input>
                     </div>
                     <div className='request_item_collectiondateContainer'>
                         <label htmlFor='collection_date'>Collect Date:</label>
-                        <input type='date'></input>
+                        <input type='date' onChange={(event) => handleCollectionDate(event.target.value)}></input>
                     </div>
                 </div>
                 <button>Submit Request</button>
@@ -72,7 +86,7 @@ const RequestItemPage = ({add_to_summary}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    add_to_summary: (item) => dispatch({type: "ADD_TO_SUMMARY", payload: item})
+    add_to_summary: (item) => dispatch(ADD_TO_SUMMARY(item))
 })
 
 export default connect(null, mapDispatchToProps)(RequestItemPage)
