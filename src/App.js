@@ -3,7 +3,7 @@ import './App.scss';
 // Start Importing components
 import Sidebar from './component/sidebar/sidebar.component'
 import Topbar from './component/topbar/topbar.component'
-import AddItemPage from './page/additempage/additem.page';
+import AddItem from './component/addItem/addItem.component'
 import FulfillPage from './page/fulfillpage/fulfill.page';
 // End Importing components
 
@@ -27,6 +27,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <AddItem />
         <div className='App-content'>
           <Sidebar />
           <Topbar />
@@ -42,9 +43,6 @@ function App() {
               </Route>
               <Route path='/request_list'>
                 <RequestListPage />
-              </Route>
-              <Route path='/add_item'>
-                <AddItemPage />
               </Route>
               <Route path='/store_list'>
                 <StoreListPage />

@@ -4,11 +4,14 @@ import './storelist.scss'
 import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom' 
 
-const StoreListPage = () => {
+import { connect } from 'react-redux'
+import {DISPLAY_ADDITEM_COMPONENT} from '../../redux/storeitem/storeitem.action'
+
+const StoreListPage = ({toggleAddItem}) => {
     return (
         <div className="storelist_page">
             <h2 className="storelist_title">Inhouse List</h2>
-            <Button variant='info' className='addItem_btn'>Add Item</Button>
+            <Button variant='info' className='addItem_btn' onClick={toggleAddItem}>Add Item</Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -51,4 +54,8 @@ const StoreListPage = () => {
     )
 }
 
-export default StoreListPage
+const mapDispatchToProps = dispatch => ({
+    toggleAddItem: () => dispatch(DISPLAY_ADDITEM_COMPONENT)
+})
+
+export default connect(null, mapDispatchToProps)(StoreListPage)
