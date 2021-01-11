@@ -29,8 +29,8 @@ function App() {
       <div className="App">
       <AddItem />
         <div className='App-content'>
-          <Sidebar />
-          <Topbar />
+          <Sidebar className='sidebar-main'/>
+          <Topbar className='topbar-main'/>
           <div className='main'>
               <Route exact path='/'>
                 <HomePage />

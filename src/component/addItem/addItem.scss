@@ -5,7 +5,7 @@
 
     top: 50%;
     left: 50%;
-    padding: 1.5rem 2rem; 
+    padding: 1.5rem 2rem;
 
     transform: translate(-50%, -50%);
     z-index: 1000;
@@ -15,6 +15,10 @@
     font-weight: 500;
     box-shadow: .1rem .1rem rgb(190, 190, 190);
     flex-direction: column;
+}
+
+.animate-appear {
+    animation: appear .5s;
 }
 
 .addItem-header {
@@ -45,4 +49,18 @@
 .addItem-submit-btn {
     width: 100%;
     margin-top: 1.2rem;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

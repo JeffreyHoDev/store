@@ -1,12 +1,14 @@
 .App {
 
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 95vw;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 10fr;
 
   &-content {
     display: grid;
-    grid-template-columns: 1fr 10fr;
-    grid-template-rows: 1fr 10fr;    
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: 1fr 100vh;    
   }
 
 }
@@ -14,4 +16,13 @@
 .main {
   grid-row: 2/-1;
   grid-column: 2/-1;
+}
+
+.sidebar {
+  grid-column: 1/2;
+  grid-row: 1/ -1;
+}
+
+.topbar {
+  grid-row: 1/2;
 }

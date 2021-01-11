@@ -12,7 +12,7 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
             displayAddItem ?
         <div>
             <div className='background-page' onClick={toggleAddItem}></div>
-            <div className='addItem_container'>
+            <div className={`addItem_container ${displayAddItem ? 'animate-appear' : ''} `}>
                 <div className="addItem-header">
                     <h2>Add New Item</h2>
                     <Button className="cancel-btn" variant="secondary" onClick={toggleAddItem}>Cancel</Button>
