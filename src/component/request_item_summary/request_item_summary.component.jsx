@@ -1,7 +1,7 @@
 import React from 'react'
 import './request_item_summary.scss'
 
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { REMOVE_FROM_SUMMARY } from '../../redux/requestitem/requestitem.action'
@@ -13,7 +13,7 @@ const RequestItemSummary = ({summary_items, removeFromSummary}) => {
             {
                 summary_items.map((item,index) => {
                     return(<ListGroup variant="flush" key={index}>
-                        <ListGroup.Item className='summary_item'><span>{item.name} - {item.quantity}</span><button onClick={() => removeFromSummary(item)}>Remove</button></ListGroup.Item>
+                        <ListGroup.Item className='summary_item'><span>{item.name} - {item.quantity}</span><Button variant="danger" onClick={() => removeFromSummary(item)}>Remove</Button></ListGroup.Item>
                     </ListGroup>)
                 })
             }

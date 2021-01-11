@@ -11,9 +11,12 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
         {
             displayAddItem ?
         <div>
-            <div className='background-page'></div>
+            <div className='background-page' onClick={toggleAddItem}></div>
             <div className='addItem_container'>
-                <Button className="cancel-btn" variant="warning" onClick={toggleAddItem}>Cancel</Button>
+                <div className="addItem-header">
+                    <h2>Add New Item</h2>
+                    <Button className="cancel-btn" variant="secondary" onClick={toggleAddItem}>Cancel</Button>
+                </div>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Item Name:</Form.Label>
@@ -27,7 +30,7 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
                         <Form.Label>Available Quantity:</Form.Label>
                         <Form.Control type="number" placeholder="Enter current available quantities" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className="addItem-submit-btn" variant="success" type="submit">
                         Submit
                     </Button>
                 </Form>

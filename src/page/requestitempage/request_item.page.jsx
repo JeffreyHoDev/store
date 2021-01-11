@@ -4,8 +4,9 @@ import './request_item.scss'
 
 import RequestItemSummary from '../../component/request_item_summary/request_item_summary.component'
 
-import { connect } from 'react-redux'
+import { Button, Form } from 'react-bootstrap'
 
+import { connect } from 'react-redux'
 import { ADD_TO_SUMMARY } from '../../redux/requestitem/requestitem.action'
 
 const RequestItemPage = ({add_to_summary}) => {
@@ -54,8 +55,10 @@ const RequestItemPage = ({add_to_summary}) => {
                                     <tr key={index}>
                                         <td>{item.id}</td>
                                         <td>{item.name}</td>
-                                        <td><input type='number' min='0' id={item.id} onChange={(event) => handleDynamicInput(event, item.name)}></input></td>
-                                        <td><button onClick={() => add_to_summary({name: item.name, quantity: request_quantity[item.name]})}>Add</button></td>
+                                        <td>
+                                            <Form.Control type='number' min='0' id={item.id} onChange={(event) => handleDynamicInput(event, item.name)}></Form.Control>
+                                        </td>
+                                        <td><Button variant="primary" onClick={() => add_to_summary({name: item.name, quantity: request_quantity[item.name]})}>Add</Button></td>
                                     </tr> 
                                 )
                             })
@@ -72,7 +75,7 @@ const RequestItemPage = ({add_to_summary}) => {
                         <input type='date' onChange={(event) => handleCollectionDate(event.target.value)}></input>
                     </div>
                 </div>
-                <button>Submit Request</button>
+                <Button variant="success">Submit Request</Button>
             </div>
             <div className='request_item_summary'>
                 <RequestItemSummary />

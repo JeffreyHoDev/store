@@ -11,12 +11,13 @@
 
 .fulfill_others {
     margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
     color: black;
 
     & label {
         text-decoration: underline;
         margin-bottom: .8rem;
-        font-weight: 800;
+        font-weight: 500;
     }
 
     & h5 {
@@ -26,7 +27,7 @@
 
 .action-container {
     display: flex;
-    flex-direction: column;
+    column-gap: 1.2rem;
 
     & button {
         width: max-content;

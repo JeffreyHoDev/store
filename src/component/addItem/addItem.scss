@@ -1,18 +1,31 @@
 .addItem_container {
     position: absolute;
+    display: flex;
+    width: 50%;
+
     top: 50%;
     left: 50%;
+    padding: 1.5rem 2rem; 
+
     transform: translate(-50%, -50%);
     z-index: 1000;
-    padding: 1.5rem 2rem;
-    background-color: rgb(212, 212, 212);
+    background-image: linear-gradient(to right, rgb(206, 206, 206), whitesmoke);
     color: black;
     font-size: 1.3rem;
     font-weight: 500;
-    width: 50%;
-    box-shadow: .1rem .1rem rgb(48, 47, 47);
-    display: flex;
+    box-shadow: .1rem .1rem rgb(190, 190, 190);
     flex-direction: column;
+}
+
+.addItem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addItem-header h2 {
+    color: rgb(75, 75, 75);
+    text-decoration: underline;
 }
 
 .background-page {
@@ -20,11 +33,16 @@
     background-color: whitesmoke;
     opacity: .8;
     width: 100%;
-    height: 100%;
+    height: 95%;
     filter: blur(5rem);
 }
 
 .cancel-btn {
     width: 5rem;
     align-self: flex-end;
+}
+
+.addItem-submit-btn {
+    width: 100%;
+    margin-top: 1.2rem;
 }

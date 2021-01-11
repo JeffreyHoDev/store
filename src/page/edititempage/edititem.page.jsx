@@ -15,17 +15,22 @@ const EditItemPage = () => {
                     <Form.Control plaintext readOnly defaultValue="Item A" />
                 </Form.Group>
                 <Form.Group>
+                    <Form.Label bold><span>Previous Quantities:</span> </Form.Label>
+                    <Form.Control plaintext readOnly defaultValue="300" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label bold><span>Brand:</span> </Form.Label>
+                    <Form.Control plaintext readOnly defaultValue="Brand A" />
+                </Form.Group>
+                <Form.Group>
                     <Form.Label><span>Quantities:</span> </Form.Label>
                     <Form.Control size='sm' type="number" placeholder="Current available quantities" min='0' />
                 </Form.Group>
-                <Form.Group>
+
+                {/* <Form.Group>
                     <Form.Label><span>Type:</span></Form.Label>
                     <Form.Control plaintext readOnly defaultValue="Product" />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label><span>Brand</span></Form.Label>
-                    <Form.Control plaintext readOnly defaultValue="Brand A" />
-                </Form.Group>
+                </Form.Group> */}
                 <Button variant="success" type="submit">
                     Save & Edit
                 </Button>

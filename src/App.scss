@@ -1,5 +1,8 @@
 .App {
 
+  min-height: 100vh;
+  min-width: 100vw;
+
   &-content {
     display: grid;
     grid-template-columns: 1fr 10fr;
