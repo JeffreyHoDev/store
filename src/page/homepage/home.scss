@@ -1,0 +1,16 @@
+.chart-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-container {
+    margin: 1rem auto;
+    width: 75%;
+}
+
+.chart-query {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+}

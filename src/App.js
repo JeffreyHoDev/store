@@ -14,6 +14,7 @@ import LoginPage from './page/loginpage/login.page';
 import RequestItemPage from './page/requestitempage/request_item.page';
 import RequestListPage from './page/requestlistpage/requestlist.page';
 import StoreListPage from './page/storelistpage/storelist.page';
+import UserManagementPage from './page/usermanagementpage/usermanagement.page'
 // End importing page components
 
 // Start Importing React Router
@@ -44,6 +45,9 @@ function App() {
               </Route>
               <Route path='/request_list'>
                 <RequestListPage />
+              </Route>
+              <Route path='/user_management'>
+                <UserManagementPage />
               </Route>
               <Route path='/store_list'>
                 <StoreListPage />

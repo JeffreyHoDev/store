@@ -2,13 +2,12 @@
 
   min-height: 100vh;
   min-width: 95vw;
-  grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr 10fr;
+  position: relative;
 
   &-content {
     display: grid;
     grid-template-columns: 1fr 9fr;
-    grid-template-rows: 1fr 100vh;    
+    grid-template-rows: 1fr 7fr;    
   }
 
 }
@@ -16,6 +15,7 @@
 .main {
   grid-row: 2/-1;
   grid-column: 2/-1;
+  min-height: max-content;
 }
 
 .sidebar {

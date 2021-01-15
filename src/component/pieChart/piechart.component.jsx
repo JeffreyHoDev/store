@@ -8,8 +8,9 @@ import {
 	Interaction,
 	getTheme
 } from 'bizcharts';
+import './pieChart.scss'
 
-const Labelline = () => {
+const PieChart = () => {
 	const data = [
 		{ item: '事例一', count: 40, percent: 0.4 },
 		{ item: '事例二', count: 21, percent: 0.21 },
@@ -29,35 +30,39 @@ const Labelline = () => {
 
 
 	return (
-		<Chart height={400} data={data} scale={cols} autoFit>
-			<Coordinate type="theta" radius={0.75} />
-			<Tooltip showTitle={false} />
-			<Axis visible={false} />
-			<Interval
-				position="percent"
-				adjust="stack"
-				color="item"
-				style={{
-					lineWidth: 1,
-					stroke: '#fff',
-				}}
-				label={['count', {
-					content: (data) => {
-						return `${data.item}: ${data.percent * 100}%`;
-					},
-				}]}
-				state={{
-					selected: {
-						style: (t) => {
-							const res = getTheme().geometries.interval.rect.selected.style(t);
-							return { ...res, fill: 'red' }
+		<div>
+			<h4 className="pieChart-title">Outbound Quantities Distribution</h4>
+			<Chart height={400} data={data} scale={cols} autoFit>
+				<Coordinate type="theta" radius={0.75} />
+				<Tooltip showTitle={false} />
+				<Axis visible={false} />
+				<Interval
+					position="percent"
+					adjust="stack"
+					color="item"
+					style={{
+						lineWidth: 1,
+						stroke: '#fff',
+					}}
+					label={['count', {
+						content: (data) => {
+							return `${data.item}: ${data.percent * 100}%`;
+						},
+					}]}
+					state={{
+						selected: {
+							style: (t) => {
+								const res = getTheme().geometries.interval.rect.selected.style(t);
+								return { ...res, fill: 'red' }
+							}
 						}
-					}
-				}}
-			/>
-			<Interaction type='element-single-selected' />
-		</Chart>
+					}}
+				/>
+				<Interaction type='element-single-selected' />
+			</Chart>
+
+		</div>
 	);
 }
 
-export default Labelline
+export default PieChart
