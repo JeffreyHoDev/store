@@ -5,6 +5,8 @@ import Sidebar from './component/sidebar/sidebar.component'
 import Topbar from './component/topbar/topbar.component'
 import AddItem from './component/addItem/addItem.component'
 import FulfillPage from './page/fulfillpage/fulfill.page';
+import Verification from './component/verification/verification.component'
+
 
 // End Importing components
 
@@ -30,6 +32,7 @@ function App() {
     <Router>
       <div className="App">
       <AddItem />
+      <Verification />
         <div className='App-content'>
           <Sidebar className='sidebar-main'/>
           <Topbar className='topbar-main'/>

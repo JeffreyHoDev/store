@@ -22,7 +22,7 @@ const FulfillPage = () => {
                 <label htmlFor='requestor'>Requestor:</label>
                 <h6 name='requestor'>Jeffrey</h6>
             </div>
-            <div class='action-container'>
+            <div className='action-container'>
                 <Button variant="success">Complete</Button>
                 <Button variant="danger">Abandon</Button>
             </div>

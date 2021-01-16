@@ -3,11 +3,15 @@ import './usermanagement.scss'
 
 import { Button, Table } from 'react-bootstrap'
 
-const UserManagementPage = () => {
+import { connect } from 'react-redux'
+import { SHOW_VERIFICATION_COMPONENT } from '../../redux/verification/verification.action'
+
+
+const UserManagementPage = ({showVerification}) => {
     return (
         <div className="user_management_page">
             <h2 className="user_management_title">User List</h2>
-            <Button variant='info' className='addUser_btn'>Add User</Button>
+            <Button variant='info' className='addUser_btn' onClick={() => showVerification(null)}>Add User</Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -24,7 +28,7 @@ const UserManagementPage = () => {
                         <td>Adrian</td>
                         <td>adrian@email.com</td>
                         <td>Basic</td>
-                        <td><Button variant="danger">Delete</Button></td>
+                        <td><Button variant="danger" onClick={() => showVerification(1)}>Delete</Button></td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -46,4 +50,10 @@ const UserManagementPage = () => {
     )
 }
 
-export default UserManagementPage
+
+
+const mapDispatchToProps = dispatch => ({
+    showVerification: (id) => dispatch(SHOW_VERIFICATION_COMPONENT(id))
+})
+
+export default connect(null, mapDispatchToProps)(UserManagementPage)
