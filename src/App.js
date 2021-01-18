@@ -6,8 +6,8 @@ import Topbar from './component/topbar/topbar.component'
 import AddItem from './component/addItem/addItem.component'
 import FulfillPage from './page/fulfillpage/fulfill.page';
 import Verification from './component/verification/verification.component'
-
-
+import AddUser from './component/addUser/adduser.component'
+import DeleteUser from './component/deleteUser/deleteuser.component'
 // End Importing components
 
 // Start importing page components
@@ -32,6 +32,8 @@ function App() {
     <Router>
       <div className="App">
       <AddItem />
+      <AddUser />
+      <DeleteUser />
       <Verification />
         <div className='App-content'>
           <Sidebar className='sidebar-main'/>

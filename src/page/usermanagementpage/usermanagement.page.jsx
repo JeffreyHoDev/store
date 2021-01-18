@@ -35,14 +35,14 @@ const UserManagementPage = ({showVerification}) => {
                         <td>Tom</td>
                         <td>tom@email.com</td>
                         <td>Admin</td>
-                        <td><Button variant="danger">Delete</Button></td>
+                        <td><Button variant="danger" onClick={() => showVerification(2)}>Delete</Button></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>John</td>
                         <td>john@email.com</td>
                         <td>Basic</td>
-                        <td><Button variant="danger">Delete</Button></td>
+                        <td><Button variant="danger" onClick={() => showVerification(3)}>Delete</Button></td>
                     </tr>
                 </tbody>
             </Table>
