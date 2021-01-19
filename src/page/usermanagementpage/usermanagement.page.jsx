@@ -28,7 +28,7 @@ const UserManagementPage = ({showVerification}) => {
                         <td>Adrian</td>
                         <td>adrian@email.com</td>
                         <td>Basic</td>
-                        <td><Button variant="danger" onClick={() => showVerification(1)}>Delete</Button></td>
+                        <td><Button variant="danger" onClick={() => showVerification(12)}>Delete</Button></td>
                     </tr>
                     <tr>
                         <td>2</td>

@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
-    is_deleting: false
+    is_deleting: false,
+    errorMessage: "",
+    is_adding: false
 }
 
 export const UserReducer = (state=INITIAL_STATE, action) => {
@@ -18,6 +20,23 @@ export const UserReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 is_deleting: false
+            }
+        case "ADD_NEW_USER_START":
+            return {
+                ...state,
+                is_adding: true
+            }
+        case "ADD_NEW_USER_SUCCESS":
+            return {
+                ...state,
+                is_adding: false,
+                errorMessage: ""
+            }
+        case "ADD_NEW_USER_FAILED":
+            return {
+                ...state,
+                is_adding: false,
+                errorMessage: action.payload
             }
         default:
             return state

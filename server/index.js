@@ -25,10 +25,13 @@ app.get('/', (req,res) => {
     res.send("Hello")
 })
 
-app.post('/login', (req,res) => {
+app.post('/verify', (req,res) => {
     const { name, email, password } = req.body
-    console.log(password)
-    knex('users').select().where('password', password)
+    knex('users').select().where({
+        'email': email,
+        'role': 'Admin',
+        'password': password
+    })
     .then(data => {
         if(data.length !== 0){
             res.json("Hi, it is there")
@@ -50,6 +53,25 @@ app.post('/login', (req,res) => {
     //     res.json("Wrong Credentials")
     //   }
     })
+    .catch(err => res.json(err))
+})
+
+app.post('/add_new_user', (req,res) => {
+    const {name, email, role, password} = req.body
+    knex('users').insert({
+        "name": name,
+        "email": email,
+        "role": role,
+        "password": password
+    })
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+})
+
+app.post('/delete_user', (req,res) => {
+    const { id } = req.body
+    knex('users').where('id', id).del()
+    .then(result => res.json(result))
     .catch(err => res.json(err))
 })
 

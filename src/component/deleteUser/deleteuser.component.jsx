@@ -5,8 +5,9 @@ import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { RESET_AUTHORIZED } from '../../redux/verification/verification.action'
+import { DELETE_USER_ASYNC } from '../../redux/user/user.action'
 
-const DeleteUser = ({ authorized, capturedID, resetAuthorized }) => {
+const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync }) => {
     return (
         <div>
         {
@@ -28,7 +29,7 @@ const DeleteUser = ({ authorized, capturedID, resetAuthorized }) => {
                         <Form.Label>Role</Form.Label>
                         <Form.Control type="text" value="Admin" readOnly/>
                     </Form.Group>
-                    <Button variant="danger" type="button">
+                    <Button variant="danger" type="button" onClick={() => deleteUserAsync(capturedID)}>
                         Delete
                     </Button>
                 </Form> 
@@ -46,7 +47,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    resetAuthorized: () => dispatch(RESET_AUTHORIZED())
+    resetAuthorized: () => dispatch(RESET_AUTHORIZED()),
+    deleteUserAsync: (user_id) => dispatch(DELETE_USER_ASYNC(user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteUser)
