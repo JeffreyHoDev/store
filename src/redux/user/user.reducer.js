@@ -9,7 +9,8 @@ export const UserReducer = (state=INITIAL_STATE, action) => {
         case "DELETE_USER_FROM_DATABASE_START":
             return {
                 ...state,
-                is_deleting: true
+                is_deleting: true,
+                errorMessage: ""
             }
         case "DELETE_USER_FROM_DATABASE_SUCCESS":
             return {

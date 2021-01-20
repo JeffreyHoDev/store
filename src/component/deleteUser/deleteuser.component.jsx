@@ -1,13 +1,13 @@
 import React from 'react'
 import './deleteuser.scss'
 
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { RESET_AUTHORIZED } from '../../redux/verification/verification.action'
 import { DELETE_USER_ASYNC } from '../../redux/user/user.action'
 
-const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync }) => {
+const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync, isDeleting }) => {
     return (
         <div>
         {
@@ -31,6 +31,7 @@ const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync }
                     </Form.Group>
                     <Button variant="danger" type="button" onClick={() => deleteUserAsync(capturedID)}>
                         Delete
+                        {isDeleting ? <Spinner animation="border" variant="success" />: null}
                     </Button>
                 </Form> 
                 </div>
@@ -43,7 +44,8 @@ const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync }
 
 const mapStateToProps = (state) => ({
     authorized: state.verificationReducer.authorized,
-    capturedID: state.verificationReducer.capturedID
+    capturedID: state.verificationReducer.capturedID,
+    isDeleting: state.userReducer.is_deleting
 })
 
 const mapDispatchToProps = dispatch => ({

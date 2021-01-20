@@ -75,6 +75,53 @@ app.post('/delete_user', (req,res) => {
     .catch(err => res.json(err))
 })
 
+app.post('/add_new_item', (req,res) => {
+    const { item_name, brand, available_quantity, reserved_quantity, notice } = req.body
+    knex('items_management').insert({
+        "item_name": item_name,
+        "brand": brand,
+        "available_quantity": available_quantity,
+        "reserved_quantity": reserved_quantity,
+        "notice": notice
+    })
+    .then(result => {
+        if(result.name === 'error'){
+            res.json(result.detail)
+        }
+        else {
+            res.json({
+                "status": "OK",
+                "message": "Added Item Success"
+            })
+        }
+    })
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_store_items', (req,res) => {
+    knex.select().table('items_management')
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_single_item', (req,res) => {
+    const { item_id } = req.body
+    knex('items_management').where('item_id', item_id)
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/update_single_item', (req,res) => {
+    const { item_id, available_quantity, reserved_quantity } = req.body
+    knex('items_management').where('item_id', item_id)
+    .update({
+        "available_quantity": available_quantity,
+        "reserved_quantity": reserved_quantity
+    })
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
 app.listen(port, () => {
     console.log(`Listening to port ${port}`)
 })

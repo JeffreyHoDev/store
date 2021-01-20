@@ -9,7 +9,7 @@ import { Button, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { ADD_TO_SUMMARY } from '../../redux/requestitem/requestitem.action'
 
-const RequestItemPage = ({add_to_summary}) => {
+const RequestItemPage = ({add_to_summary, summaryItems}) => {
 
     const [request_quantity, handleRequestQuantity] = useState({})
     const [project_name, handleProjectName] = useState('')
@@ -84,8 +84,12 @@ const RequestItemPage = ({add_to_summary}) => {
     )
 }
 
+const mapStateToProps = state => ({
+    summaryItems: state.RequestItemReducer.summaryItems
+})
+
 const mapDispatchToProps = dispatch => ({
     add_to_summary: (item) => dispatch(ADD_TO_SUMMARY(item))
 })
 
-export default connect(null, mapDispatchToProps)(RequestItemPage)
+export default connect(mapStateToProps, mapDispatchToProps)(RequestItemPage)

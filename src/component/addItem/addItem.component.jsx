@@ -3,9 +3,9 @@ import { Form, Button } from 'react-bootstrap'
 import './addItem.scss'
 
 import { connect } from 'react-redux'
-import { DISPLAY_ADDITEM_COMPONENT } from '../../redux/storeitem/storeitem.action'
+import { DISPLAY_ADDITEM_COMPONENT, ADD_NEW_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
-const AddItem = ({displayAddItem, toggleAddItem}) => {
+const AddItem = ({displayAddItem,errorMessage, toggleAddItem, addNewItem}) => {
 
     const [item_name, handleItemName] = useState('')
     const [brand, handleBrand] = useState('')
@@ -21,7 +21,7 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
             <div className='background-page' onClick={toggleAddItem}></div>
             <div className={`addItem_container ${displayAddItem ? 'animate-appear' : ''} `}>
                 <div className="addItem-header">
-                    <h2>Add New Item</h2>
+                    <h4>Add New Item</h4>
                     <Button className="cancel-btn" variant="secondary" onClick={toggleAddItem}>Cancel</Button>
                 </div>
                 <Form>
@@ -45,9 +45,18 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
                         <Form.Label>Notice</Form.Label>
                         <Form.Control as="textarea" rows={4} placeholder="Notification message to everyone about the item..." onChange={(e) => handleNotice(e.target.value)}/>
                     </Form.Group>
-                    <Button className="addItem-submit-btn" variant="success" type="button">
+                    <Button className="addItem-submit-btn" variant="success" type="button" 
+                    onClick={() => addNewItem({
+                        "item_name": item_name,
+                        "brand": brand,
+                        "available_quantity": available_quantity,
+                        "reserved_quantity": reserved_quantity,
+                        "notice": notice
+                    })}
+                    >
                         Submit
                     </Button>
+                    <p className='errorMessage'>{errorMessage? errorMessage : null}</p>
                 </Form>
             </div>
         </div>
@@ -58,11 +67,13 @@ const AddItem = ({displayAddItem, toggleAddItem}) => {
 }
 
 const mapStateToProps = (state) => ({
-    displayAddItem: state.StoreItemReducer.displayAddItem
+    displayAddItem: state.StoreItemReducer.displayAddItem,
+    errorMessage: state.StoreItemReducer.errorMessage
 })
 
 const mapDispatchToProps = dispatch => ({
-    toggleAddItem: () => dispatch(DISPLAY_ADDITEM_COMPONENT)
+    toggleAddItem: () => dispatch(DISPLAY_ADDITEM_COMPONENT),
+    addNewItem: (dataObj) => dispatch(ADD_NEW_ITEM_ASYNC(dataObj))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddItem)

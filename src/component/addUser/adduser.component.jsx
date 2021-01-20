@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import './adduser.scss'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { RESET_AUTHORIZED } from '../../redux/verification/verification.action'
 import { ADD_NEW_USER_ASYNC } from '../../redux/user/user.action'
 
-const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage}) => {
+const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage, isAdding}) => {
     const [new_email, handleEmail] = useState('')
     const [new_name, handleName] = useState('')
     const [new_role, handleRole] = useState('Admin')
@@ -43,7 +43,8 @@ const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage
                                 <Form.Control type="password" placeholder="Password" required onChange={(e) => handlePassword(e.target.value)}/>
                             </Form.Group>
                             <Button variant="primary" type="button" onClick={() => addUser(new_email, new_name, new_role, new_password)}>
-                                Add User
+                                Add User 
+                                {isAdding ? <Spinner animation="border" variant="success" /> : null}
                             </Button>
                             {
                                 errorMessage.length !== 0? <p>{errorMessage}</p>: null
@@ -52,7 +53,6 @@ const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage
                     </div>
                 </div>: null
             }
-
         </div>
     )
 }
@@ -60,7 +60,8 @@ const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage
 const mapStateToProps = (state) => ({
     authorized: state.verificationReducer.authorized,
     capturedID: state.verificationReducer.capturedID,
-    errorMessage: state.userReducer.errorMessage
+    errorMessage: state.userReducer.errorMessage,
+    isAdding: state.userReducer.is_adding
 })
 
 const mapDispatchToProps = dispatch => ({
