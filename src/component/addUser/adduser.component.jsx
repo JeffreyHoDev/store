@@ -60,8 +60,8 @@ const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage
 const mapStateToProps = (state) => ({
     authorized: state.verificationReducer.authorized,
     capturedID: state.verificationReducer.capturedID,
-    errorMessage: state.userReducer.errorMessage,
-    isAdding: state.userReducer.is_adding
+    errorMessage: state.UserReducer.errorMessage,
+    isAdding: state.UserReducer.is_adding
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -75,6 +75,19 @@ app.post('/delete_user', (req,res) => {
     .catch(err => res.json(err))
 })
 
+app.post('/fetch_users', (req,res) => {
+    knex.select('id', 'name', 'email', 'role').from('users')
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_single_user', (req,res) => {
+    const { id } = req.body
+    knex.select('id', 'name', 'email', 'role').from('users').where('id', id)
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
 app.post('/add_new_item', (req,res) => {
     const { item_name, brand, available_quantity, reserved_quantity, notice } = req.body
     knex('items_management').insert({

@@ -4,11 +4,11 @@ import './edititem.scss'
 import { connect } from 'react-redux'
 
 import { Form, Button, Spinner } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
 
 import { FETCH_SINGLEITEM_ASYNC, UPDATE_SINGLEITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
-const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem }) => {
+const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem, redirectTo }) => {
     const { item_id } = useParams()
 
     const [new_quantity, handleNewQuantity] = useState(0)
@@ -18,6 +18,10 @@ const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem 
     useEffect(() => {
         fetchDetail(item_id)
     }, [])
+
+    if(redirectTo.length !== 0){
+        return <Redirect to={`${redirectTo}`}/>
+    }
 
     return (
         <div>
@@ -74,7 +78,8 @@ const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem 
 
 const mapStateToProps = state => ({
     itemDetail: state.StoreItemReducer.singleItem,
-    singleItemFetching: state.StoreItemReducer.singleItem_is_fetching
+    singleItemFetching: state.StoreItemReducer.singleItem_is_fetching,
+    redirectTo: state.UrlReducer.redirectLink
 })
 
 const mapDispatchToProps = dispatch => ({

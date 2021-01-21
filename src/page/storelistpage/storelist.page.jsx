@@ -2,16 +2,24 @@ import React, {useEffect} from 'react'
 import './storelist.scss'
 
 import { Table, Button, Spinner } from 'react-bootstrap'
-import { Link } from 'react-router-dom' 
+import { Link, useHistory } from 'react-router-dom' 
 
 import { connect } from 'react-redux'
 import {DISPLAY_ADDITEM_COMPONENT, FETCH_ITEM_ASYNC} from '../../redux/storeitem/storeitem.action'
 
-const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching }) => {
+const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redirectTo }) => {
 
     useEffect(() => {
         fetchItem()
     },[])
+    
+    const history = useHistory()
+
+    // START - To reload this page after use add the item
+    if(redirectTo === 'reload'){
+        history.go(0)
+    }
+    // END - To reload this page after use add the item
 
     return (
         <div className="storelist_page">
@@ -56,7 +64,8 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching }) => {
 
 const mapStateToProps = state => ({
     storeItem: state.StoreItemReducer.storeItem,
-    isFetching: state.StoreItemReducer.is_fetching
+    isFetching: state.StoreItemReducer.is_fetching,
+    redirectTo: state.UrlReducer.redirectLink
 })
 
 const mapDispatchToProps = dispatch => ({

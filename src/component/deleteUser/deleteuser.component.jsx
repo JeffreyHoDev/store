@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './deleteuser.scss'
 
 import { Button, Form, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { RESET_AUTHORIZED } from '../../redux/verification/verification.action'
-import { DELETE_USER_ASYNC } from '../../redux/user/user.action'
+import { DELETE_USER_ASYNC, FETCH_SINGLEUSER_ASYNC } from '../../redux/user/user.action'
 
-const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync, isDeleting }) => {
+const DeleteUser = ({ singleUser, fetchUser, authorized, capturedID, resetAuthorized, deleteUserAsync, isDeleting }) => {
+    useEffect(() => {
+        fetchUser(capturedID)
+    }, [capturedID])
+
     return (
         <div>
         {
-            authorized && capturedID !== null?
+            authorized && capturedID !== null ?
+            singleUser.length > 0 ?
             <div>
                 <div className="deleteuser-background" onClick={()=> resetAuthorized()}></div>
                 <div className="deleteuser-container">
@@ -19,23 +24,23 @@ const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync, 
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" value="someemail@email.com" readOnly/>
+                        <Form.Control type="email" value={singleUser[0].email} readOnly/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" value="somename" readOnly/>
+                        <Form.Control type="text" value={singleUser[0].name} readOnly/>
                     </Form.Group>
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Role</Form.Label>
-                        <Form.Control type="text" value="Admin" readOnly/>
+                        <Form.Control type="text" value={singleUser[0].role} readOnly/>
                     </Form.Group>
                     <Button variant="danger" type="button" onClick={() => deleteUserAsync(capturedID)}>
                         Delete
                         {isDeleting ? <Spinner animation="border" variant="success" />: null}
                     </Button>
-                </Form> 
+                </Form>
                 </div>
-            </div>
+            </div>: <Spinner />
             : null
         }
         </div>
@@ -45,12 +50,15 @@ const DeleteUser = ({ authorized, capturedID, resetAuthorized, deleteUserAsync, 
 const mapStateToProps = (state) => ({
     authorized: state.verificationReducer.authorized,
     capturedID: state.verificationReducer.capturedID,
-    isDeleting: state.userReducer.is_deleting
+    isDeleting: state.UserReducer.is_deleting,
+    isFetching: state.UserReducer.is_fetching,
+    singleUser: state.UserReducer.singleUser
 })
 
 const mapDispatchToProps = dispatch => ({
     resetAuthorized: () => dispatch(RESET_AUTHORIZED()),
-    deleteUserAsync: (user_id) => dispatch(DELETE_USER_ASYNC(user_id))
+    deleteUserAsync: (user_id) => dispatch(DELETE_USER_ASYNC(user_id)),
+    fetchUser: (user_id) => dispatch(FETCH_SINGLEUSER_ASYNC(user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteUser)

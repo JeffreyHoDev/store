@@ -1,5 +1,5 @@
 import STORE_ITEM_CONSTANT from './storeitem.constant.js'
-
+import { RedirectTo, ResetRedirect } from '../url/url.action'
 
 export const DISPLAY_ADDITEM_COMPONENT = {
     type: STORE_ITEM_CONSTANT.DISPLAY_ADDITEM_COMPONENT
@@ -58,6 +58,8 @@ export const UPDATE_SINGLEITEM_FAILED = (error) => ({
     payload: error
 })
 
+// START - ASYNC action handler
+
 export const ADD_NEW_ITEM_ASYNC = (dataObj) => {
     return dispatch => {
         dispatch(ADD_NEW_ITEM_START())
@@ -73,6 +75,8 @@ export const ADD_NEW_ITEM_ASYNC = (dataObj) => {
             if(data.status === "OK"){
                 dispatch(ADD_NEW_ITEM_SUCCESS())
                 dispatch(DISPLAY_ADDITEM_COMPONENT)
+                dispatch(RedirectTo('reload'))
+                dispatch(ResetRedirect())
             }
             else{
                 dispatch(ADD_NEW_ITEM_FAILED(data.detail))
@@ -133,6 +137,8 @@ export const UPDATE_SINGLEITEM_ASYNC = (dataObj) => {
         .then(data => {
             if(data === 1){
                 dispatch(UPDATE_SINGLEITEM_SUCCESS())
+                dispatch(RedirectTo('/store_list'))
+                dispatch(ResetRedirect())
             }
             else {
                 dispatch(UPDATE_SINGLEITEM_FAILED("Some error occur"))
@@ -141,3 +147,5 @@ export const UPDATE_SINGLEITEM_ASYNC = (dataObj) => {
         .catch(err => dispatch(UPDATE_SINGLEITEM_FAILED(err)))
     }
 }
+
+// END - ASYNC action handler
