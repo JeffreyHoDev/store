@@ -135,6 +135,25 @@ app.post('/update_single_item', (req,res) => {
     .catch(err => res.json(err))
 })
 
+app.post('/submit_request', (req,res) => {
+    const { collection_date, item_details, project_name, requestor } = req.body
+    knex('request_list').insert({
+        "collection_date": collection_date,
+        "item_details": JSON.stringify(item_details),
+        "project_name": project_name,
+        "requestor": requestor,
+        "status": "New"
+    })
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_request_list', (req,res) => {
+    knex.select().table('request_list')
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
 app.listen(port, () => {
     console.log(`Listening to port ${port}`)
 })

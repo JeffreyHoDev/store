@@ -108,6 +108,9 @@ export const ADD_NEW_USER_ASYNC = (email, name, role, password) => {
             else {
                 dispatch(ADD_NEW_USER_SUCCESS())
                 dispatch(RESET_AUTHORIZED())
+                dispatch(RedirectTo('reload'))
+                dispatch(ResetRedirect())
+
             }
         })
         .catch(err => dispatch(ADD_NEW_USER_FAILED(err)))
