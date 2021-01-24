@@ -47,17 +47,15 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                             <label htmlFor='project'>Project:</label>
                             <input type='text' onChange={(event) => handleProjectName(event.target.value)}></input>
                         </div>
-                        {/* <div className='request_item_collectiondateContainer'>
-                            <label htmlFor='collection_date'>Collect Date:</label>
-                            <input type='date' onChange={(event) => handleCollectionDate(event.target.value)}></input>
-                        </div> */}
                         <div className='request_item_collectiondateContainer'>
+                            <label htmlFor='request_item_collectiondate'>Collection Date:</label>
                             <Datetime inputProps={{
                                 placeholder: "Collection Date & Time"
                             }} 
                                 onChange={handleCollectionDate}
                                 utc={true}
                                 initialValue=""
+                                name="request_item_collectiondate"
                             />
                         </div>
                     </div>
@@ -84,7 +82,7 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                                             <td>
                                                 <Form.Control type='number' min='0' id={item.item_id} onChange={(event) => handleDynamicInput(event, item.item_name)}></Form.Control>
                                             </td>
-                                            <td><Button variant="primary" onClick={() => add_to_summary({name: item.item_name, quantity: request_quantity[item.item_name]})}>Add</Button></td>
+                                            <td><Button variant="primary" onClick={() => add_to_summary({name: item.item_name, quantity: request_quantity[item.item_name], "item_id": item.item_id})}>Add</Button></td>
                                         </tr> 
                                     )
                                 })

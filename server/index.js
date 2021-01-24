@@ -5,6 +5,8 @@ const port = 50000
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const moment = require('moment')
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -17,7 +19,8 @@ const knex = require('knex')({
       host : '127.0.0.1',
       user : 'postgres',
       password : 'Reunion94!',
-      database : 'supplychainmanagement'
+      database : 'supplychainmanagement',
+      timezone: 'UTC'
     }
 });
 
@@ -149,8 +152,96 @@ app.post('/submit_request', (req,res) => {
 })
 
 app.post('/fetch_request_list', (req,res) => {
-    knex.select().table('request_list')
+    knex.select().table('request_list').where('status', 'New')
     .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_fulfilled_request_list', (req,res) => {
+    knex.select().table('request_list').where('status', 'Fulfilled')
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/fetch_single_request', (req,res) => {
+    const { request_id } = req.body
+    knex.select().table('request_list').where('request_id', request_id)
+    .then(result => {
+        const itemDetail = JSON.parse(result[0]["item_details"])
+        result[0]["item_details"] = itemDetail
+        res.json(result)
+    })
+    .catch(err => res.json(err))
+})
+
+
+app.post('/fulfill_request', (req,res) => {
+    const { request_id, itemObj } = req.body
+    knex('request_list').where('request_id', request_id).update('status', 'Fulfilled')
+    .then(result => {
+        if(result === 1){
+            const fieldsToInsert = itemObj.map(item => ({
+                "item_name": item.name,
+                "item_id": item.item_id,
+                "fulfilled_date": new Date(),
+                "outbound_quantity": item.quantity
+            }))
+        
+            knex('item_analysis').insert(fieldsToInsert)
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
+        }
+        else {
+            throw ("Error!")
+        }
+    })
+    .catch(err => res.json(err))
+})
+
+app.post('/cancel_request', (req,res) => {
+    const { request_id } = req.body
+    knex('request_list').where('request_id', request_id).update('status', 'Cancelled')
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
+})
+
+app.post('/get_pie', (req,res) => {
+    const { start_date, end_date } = req.body
+    knex('item_analysis').select('item_name').sum('outbound_quantity')
+    .groupBy('item_name')
+    .whereBetween('fulfilled_date', [start_date+" 00:00:00+08", end_date+" 23:59:59+08"])
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+})
+
+app.post('/get_line', (req,res) => {
+    const { start_date, end_date} = req.body
+    knex('item_analysis').select('fulfilled_date').sum('outbound_quantity')
+    .groupBy('fulfilled_date')
+    .whereBetween('fulfilled_date', [start_date+" 00:00:00+08", end_date+" 23:59:59+08"])
+    .orderBy('fulfilled_date', 'asc')
+    .then(result => {
+        let object = {}
+        result.map(each => {
+            var date =  new Date(each.fulfilled_date)
+            var day = date.getDate()
+            if(object[day]){
+                let currentSum = parseInt(object[day]["sum"])
+                object[day]["sum"] = currentSum + parseInt(each.sum)
+            }
+            else {
+                object[day] = {
+                    "day": day,
+                    "sum": parseInt(each.sum)
+                }
+            }
+        })
+        const returnArray = []
+        for(const [key,value] of Object.entries(object)){
+            returnArray.push(value)
+        }
+        res.json(returnArray)
+    })
     .catch(err => res.json(err))
 })
 

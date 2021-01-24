@@ -10,59 +10,53 @@ import {
 } from 'bizcharts';
 import './pieChart.scss'
 
-const PieChart = () => {
-	const data = [
-		{ item: '事例一', count: 40, percent: 0.4 },
-		{ item: '事例二', count: 21, percent: 0.21 },
-		{ item: '事例三', count: 17, percent: 0.17 },
-		{ item: '事例四', count: 13, percent: 0.13 },
-		{ item: '事例五', count: 9, percent: 0.09 },
-	];
+import { connect } from 'react-redux'
 
-	const cols = {
-		percent: {
-			formatter: val => {
-				val = val * 100 + '%';
-				return val;
-			},
-		},
-	};
-
+const PieChart = ({pie_data}) => {
 
 	return (
 		<div>
-			<h4 className="pieChart-title">Outbound Quantities Distribution</h4>
-			<Chart height={400} data={data} scale={cols} autoFit>
-				<Coordinate type="theta" radius={0.75} />
-				<Tooltip showTitle={false} />
-				<Axis visible={false} />
-				<Interval
-					position="percent"
-					adjust="stack"
-					color="item"
-					style={{
-						lineWidth: 1,
-						stroke: '#fff',
-					}}
-					label={['count', {
-						content: (data) => {
-							return `${data.item}: ${data.percent * 100}%`;
-						},
-					}]}
-					state={{
-						selected: {
-							style: (t) => {
-								const res = getTheme().geometries.interval.rect.selected.style(t);
-								return { ...res, fill: 'red' }
+		{
+			pie_data.length <= 0 ? null
+			:
+			<div>
+				<h4 className="pieChart-title">Outbound Quantities Distribution</h4>
+				<Chart height={400} data={pie_data} autoFit >
+					<Coordinate type="theta" radius={0.75} />
+					<Tooltip showTitle={false} />
+					<Axis visible={false} />
+					<Interval
+						position="sum"
+						adjust="stack"
+						color="item_name"
+						style={{
+							lineWidth: 1,
+							stroke: '#fff',
+						}}
+						label={['sum', {
+							content: (data) => {
+								return `${data.item_name}: ${data.sum}`;
+							},
+						}]}
+						state={{
+							selected: {
+								style: (t) => {
+									const res = getTheme().geometries.interval.rect.selected.style(t);
+									return { ...res, fill: 'red' }
+								}
 							}
-						}
-					}}
-				/>
-				<Interaction type='element-single-selected' />
-			</Chart>
-
+						}}
+					/>
+					<Interaction type='element-single-selected' />
+				</Chart>
+			</div>
+		}
 		</div>
 	);
 }
 
-export default PieChart
+const mapStateToProps = state => ({
+	pie_data: state.ChartReducer.pie_data
+})
+
+export default connect(mapStateToProps)(PieChart)

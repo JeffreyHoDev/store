@@ -19,9 +19,11 @@ export const RESET_SUMMARY = () => ({
 export const SUBMIT_REQUEST_START = () => ({
     type: REQUEST_ITEM_CONSTANT.SUBMIT_REQUEST_START
 })
+
 export const SUBMIT_REQUEST_SUCCESS = () => ({
     type: REQUEST_ITEM_CONSTANT.SUBMIT_REQUEST_SUCCESS
 })
+
 export const SUBMIT_REQUEST_FAILED = (error) => ({
     type: REQUEST_ITEM_CONSTANT.SUBMIT_REQUEST_FAILED,
     payload: error
@@ -30,12 +32,42 @@ export const SUBMIT_REQUEST_FAILED = (error) => ({
 export const FETCH_REQUEST_LIST_START = () => ({
     type: REQUEST_ITEM_CONSTANT.FETCH_REQUEST_LIST_START
 })
+
 export const FETCH_REQUEST_LIST_SUCCESS = (data) => ({
     type: REQUEST_ITEM_CONSTANT.FETCH_REQUEST_LIST_SUCCESS,
     payload: data
 })
+
 export const FETCH_REQUEST_LIST_FAILED = (error) => ({
     type: REQUEST_ITEM_CONSTANT.FETCH_REQUEST_LIST_FAILED,
+    payload: error
+})
+
+export const FETCH_FULFILLED_REQUEST_START = () => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_FULFILLED_REQUEST_START
+})
+
+export const FETCH_FULFILLED_REQUEST_SUCCESS = (data) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_FULFILLED_REQUEST_SUCCESS,
+    payload: data
+})
+
+export const FETCH_FULFILLED_REQUEST_FAILED = (error) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_FULFILLED_REQUEST_FAILED,
+    payload: error
+})
+
+export const FETCH_SINGLEREQUEST_START = () => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_SINGLEREQUEST_START
+})
+
+export const FETCH_SINGLEREQUEST_SUCCESS = (data) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_SINGLEREQUEST_SUCCESS,
+    payload: data
+})
+
+export const FETCH_SINGLEREQUEST_FAILED = (error) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_SINGLEREQUEST_FAILED,
     payload: error
 })
 
@@ -94,4 +126,39 @@ export const FETCH_REQUEST_LIST_ASYNC = () => {
         .catch(err => dispatch(FETCH_REQUEST_LIST_FAILED(err)))
     }
 }
+
+export const FETCH_FULFILLED_REQUEST_ASYNC = () => {
+    return dispatch => {
+        dispatch(FETCH_FULFILLED_REQUEST_START())
+        fetch('http://localhost:50000/fetch_fulfilled_request_list', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            dispatch(FETCH_FULFILLED_REQUEST_SUCCESS(data))
+        })
+        .catch(err => dispatch(FETCH_FULFILLED_REQUEST_FAILED(err)))
+    }
+}
+
+export const FETCH_SINGLEREQUEST_ASYNC = (request_id) => {
+    return dispatch => {
+        dispatch(FETCH_SINGLEREQUEST_START())
+        fetch('http://localhost:50000/fetch_single_request', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"request_id": request_id})
+        })
+        .then(response => response.json())
+        .then(data => {
+            dispatch(FETCH_SINGLEREQUEST_SUCCESS(data))
+        })
+        .catch(err => dispatch(FETCH_SINGLEREQUEST_FAILED(err)))
+    }
+} 
 // END - ASYNC action handler

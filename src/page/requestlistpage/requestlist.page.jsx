@@ -4,15 +4,22 @@ import { Table, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import { FETCH_REQUEST_LIST_ASYNC } from '../../redux/requestitem/requestitem.action'
+import { FETCH_REQUEST_LIST_ASYNC, FETCH_FULFILLED_REQUEST_ASYNC } from '../../redux/requestitem/requestitem.action'
 
-const RequestListPage = ({ fetch_requests, isFetching, requestList }) => {
+const RequestListPage = ({ fetch_fulfilled_requests, fetch_requests, isFetching, requestList }) => {
+
+    const location = useLocation()
 
     useEffect(() => {
-        fetch_requests()
-    }, [])
+        if(location.pathname === "/request_list"){
+            fetch_requests()
+        }
+        else {
+            fetch_fulfilled_requests()
+        }
+    }, [location])
 
     return (
         <div>
@@ -20,7 +27,7 @@ const RequestListPage = ({ fetch_requests, isFetching, requestList }) => {
             isFetching ? <Spinner animation="border" variant="success" />
             :
             <div className='requestlist_page'>
-                <h3>Request List</h3>
+                <h3>{ location.pathname === "/request_list" ? 'Request List' : 'History'}</h3>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -35,7 +42,7 @@ const RequestListPage = ({ fetch_requests, isFetching, requestList }) => {
                     {
                         requestList.map(request => {
                             return (    
-                            <tr>
+                            <tr key={request.request_id}>
                                 <td>{request.request_id}</td>
                                 <td>{request.project_name}</td>
                                 <td>{request.requestor}</td>
@@ -60,7 +67,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetch_requests: () => dispatch(FETCH_REQUEST_LIST_ASYNC())
+    fetch_requests: () => dispatch(FETCH_REQUEST_LIST_ASYNC()),
+    fetch_fulfilled_requests: () => dispatch(FETCH_FULFILLED_REQUEST_ASYNC())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestListPage)

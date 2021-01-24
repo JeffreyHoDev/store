@@ -12,6 +12,7 @@ const Sidebar = () => {
                 <Link to="/request_list" className='sidebar-nav-item'>Request List</Link>
                 <Link to="/request_item" className='sidebar-nav-item'>Request Item</Link>
                 <Link to="/store_list" className='sidebar-nav-item'>Store Management</Link>
+                <Link to="/history" className='sidebar-nav-item'>History</Link>
             </nav>
         </div>
     )

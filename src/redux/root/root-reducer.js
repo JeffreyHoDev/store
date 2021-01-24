@@ -4,13 +4,17 @@ import StoreItemReducer from '../storeitem/storeitem.reducer'
 import { UserReducer } from '../user/user.reducer'
 import verificationReducer from '../verification/verification.reducer'
 import UrlReducer from '../url/url.reducer'
+import FulfillRequestReducer from '../fulfillrequest/fulfillrequest.reducer'
+import ChartReducer from '../chart/chart.reducer'
 
 const rootReducer = combineReducers({
     RequestItemReducer: RequestItemReducer,
     StoreItemReducer: StoreItemReducer,
     verificationReducer: verificationReducer,
     UserReducer: UserReducer,
-    UrlReducer: UrlReducer
+    UrlReducer: UrlReducer,
+    FulfillRequestReducer: FulfillRequestReducer,
+    ChartReducer: ChartReducer
 })
 
 export default rootReducer

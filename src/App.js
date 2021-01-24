@@ -60,6 +60,9 @@ function App() {
               <Route path='/login'>
                 <LoginPage />
               </Route>
+              <Route path='/history'>
+                <RequestListPage />
+              </Route>
               <Route path='/edit/:item_id'>
                 <EditItemPage />
               </Route>
