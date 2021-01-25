@@ -1,48 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Chart, Line, Point, Tooltip, Axis } from "bizcharts";
 import './linechart.scss'
 
-// 数据源
-const data = [
-	{
-		year: "1991",
-		value: 3,
-	},
-	{
-		year: "1992",
-		value: 4,
-	},
-	{
-		year: "1993",
-		value: 3.5,
-	},
-	{
-		year: "1994",
-		value: 5,
-	},
-	{
-		year: "1995",
-		value: 4.9,
-	},
-	{
-		year: "1996",
-		value: 6,
-	},
-	{
-		year: "1997",
-		value: 7,
-	},
-	{
-		year: "1998",
-		value: 9,
-	},
-	{
-		year: "1999",
-		value: 11,
-	},
-];
+import { connect } from 'react-redux'
 
-const LineChart = () => {
+const LineChart = ({ line_data }) => {
+
 	return (
 		<div>
 			<h4 className="lineChart-title">Total Outbound Quantities Trend</h4>
@@ -50,8 +13,8 @@ const LineChart = () => {
 				padding={[10, 20, 50, 50]}
 				autoFit
 				height={500}
-				data={data}
-				scale={{ value: { min: 0,max:11 } }}
+				data={line_data}
+				scale={{ value: { min: 0 } }}
 				// onLineMouseleave={console.log}
 				// onPointClick={console.warn}
 				onAxisLabelClick={(e => {
@@ -60,10 +23,10 @@ const LineChart = () => {
 					alert(`you clicked axis: ${axis.get('field')}`)
 				})}
 			>
-				<Line position="year*value" />
-				<Point position="year*value" />
-				<Tooltip showCrosshairs lock triggerOn='click' />
-				<Axis name='value' title={{
+				<Line position="day*sum" />
+				<Point position="day*sum" />
+				<Tooltip showCrosshairs lock triggerOn='hover' />
+				<Axis name='sum' title={{
 					position: 'center'
 				}} />
 			</Chart>
@@ -72,4 +35,8 @@ const LineChart = () => {
 	);
 }
 
-export default LineChart
+const mapStateToProps = state => ({
+	line_data: state.ChartReducer.line_data
+})
+
+export default connect(mapStateToProps)(LineChart)

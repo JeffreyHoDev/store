@@ -13,7 +13,7 @@ const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem,
 
     const [new_quantity, handleNewQuantity] = useState(0)
     const [reserved_quantity, handleReservedQuantity] = useState(0)
-
+    const [new_notice, handleNotice] = useState('')
 
     useEffect(() => {
         fetchDetail(item_id)
@@ -45,6 +45,10 @@ const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem,
                                 <Form.Label><span>Previous Reserved Quantities:</span> </Form.Label>
                                 <Form.Control plaintext readOnly defaultValue={itemDetail[0].reserved_quantity} />
                             </Form.Group>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Previous Notice</Form.Label>
+                                <Form.Control as="textarea" rows={4} readOnly defaultValue={itemDetail[0].notice}/>
+                            </Form.Group>
                             <Form.Group>
                                 <Form.Label><span>Brand:</span> </Form.Label>
                                 <Form.Control plaintext readOnly defaultValue={itemDetail[0].brand} />
@@ -57,11 +61,16 @@ const EditItemPage = ({ itemDetail, fetchDetail, singleItemFetching, updateItem,
                                 <Form.Label><span>Current Reserved Quantities:</span> </Form.Label>
                                 <Form.Control size='sm' type="number" placeholder="Current reserved quantities" min='0' onChange={(e) => handleReservedQuantity(e.target.value)} />
                             </Form.Group>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>New Notice</Form.Label>
+                                <Form.Control as="textarea" rows={4} onChange={(e) => handleNotice(e.target.value) }/>
+                            </Form.Group>
                             <Button variant="success" type="button" 
                             onClick={() => updateItem({
                                     "item_id": item_id,
                                     "available_quantity": new_quantity,
-                                    "reserved_quantity": reserved_quantity
+                                    "reserved_quantity": reserved_quantity,
+                                    "notice": new_notice
                                     })
                                 }
                             >

@@ -26,37 +26,37 @@ const FulfillPage = ({ redirectTo, errorMessage, fetchSingleRequest, isFetching,
             isFetching ? <Spinner animation="border" variant="success" />
             :<div className='fulfill-page'>
                 <h2 className='fulfill-title'>Request ID: {request_id}</h2>
-                <ListGroup variant="flush">
                 {
-                    itemDetail.map((item, index) => {
-                        return <ListGroup.Item key={index}>{`${index+1}. ${item.name} - ${item.quantity}`}</ListGroup.Item>
-                    })
-                }
-                </ListGroup>
-                {
-                    requestDetail.length > 0 
-                    ?
-                    <div className='fulfill_others' key={request_id}>
-                        <label htmlFor='project'>Project:</label>
-                        <h6 name='project'>{requestDetail[0]["project_name"]}</h6>
-                        <label htmlFor='collect_date'>Collect Date:</label>
-                        <h6 name='collect_date'>{requestDetail[0]["collection_date"]}</h6>
-                        <label htmlFor='requestor'>Requestor:</label>
-                        <h6 name='requestor'>{requestDetail[0]["requestor"]}</h6>
+                    requestDetail.length > 0 ?
+                    <div>
+                        <ListGroup variant="flush">
+                            {   requestDetail[0]["item_details"].map((item, index) => {
+                                    return <ListGroup.Item key={index}>{`${index+1}. ${item.name} - ${item.quantity}`}</ListGroup.Item>
+                            })}
+                        </ListGroup>
+                        <div className='fulfill_others' >
+                            <label htmlFor='project'>Project:</label>
+                            <h6 name='project'>{requestDetail[0]["project_name"]}</h6>
+                            <label htmlFor='collect_date'>Collect Date:</label>
+                            <h6 name='collect_date'>{requestDetail[0]["collection_date"]}</h6>
+                            <label htmlFor='requestor'>Requestor:</label>
+                            <h6 name='requestor'>{requestDetail[0]["requestor"]}</h6>
+                        </div>
+                        {
+                            requestDetail[0].status === "Fulfilled" ? null
+                            :
+                            <div className='action-container'>
+                                <Button variant="success" type="button" onClick={() => fulfillRequest(itemDetail, request_id)}>Complete</Button>
+                                <Button variant="danger" type="button" onClick={() => cancelRequest(request_id)}>Abandon</Button>
+                            </div>
+                        }
+                        {
+                            errorMessage !== "" ? <p className="errorMessage">Error occured</p>: null
+                        }
                     </div>
-                    : null
+                    : <Spinner animation="border" variant="success" />
                 }
-                {
-                    requestDetail[0].status === "Fulfilled" ? null
-                    :
-                    <div className='action-container'>
-                        <Button variant="success" type="button" onClick={() => fulfillRequest(itemDetail, request_id)}>Complete</Button>
-                        <Button variant="danger" type="button" onClick={() => cancelRequest(request_id)}>Abandon</Button>
-                    </div>
-                }
-                {
-                    errorMessage !== "" ? <p className="errorMessage">Error occured</p>: null
-                }
+
             </div>
         }
         </div>

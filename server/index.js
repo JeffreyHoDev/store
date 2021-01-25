@@ -128,11 +128,12 @@ app.post('/fetch_single_item', (req,res) => {
 })
 
 app.post('/update_single_item', (req,res) => {
-    const { item_id, available_quantity, reserved_quantity } = req.body
+    const { item_id, available_quantity, reserved_quantity, notice } = req.body
     knex('items_management').where('item_id', item_id)
     .update({
         "available_quantity": available_quantity,
-        "reserved_quantity": reserved_quantity
+        "reserved_quantity": reserved_quantity,
+        "notice": notice
     })
     .then(result => res.json(result))
     .catch(err => res.json(err))
@@ -240,6 +241,7 @@ app.post('/get_line', (req,res) => {
         for(const [key,value] of Object.entries(object)){
             returnArray.push(value)
         }
+
         res.json(returnArray)
     })
     .catch(err => res.json(err))
