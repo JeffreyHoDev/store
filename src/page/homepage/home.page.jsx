@@ -5,16 +5,18 @@ import { Button } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 
-import { Card, Spinner, Table } from 'react-bootstrap'
+import { Card, Spinner } from 'react-bootstrap'
+
+import BasicTable from '../../component/table/table.component'
+
 import PieChart from '../../component/pieChart/piechart.component'
 import LineChart from '../../component/lineChart/lineChart.component'
-
-
 
 import { useState, useEffect } from 'react'
 
 import { FETCH_FOR_PIE_ASYNC, FETCH_FOR_LINE_ASYNC } from '../../redux/chart/chart.action'
 import { FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
+
 
 
 const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) => {
@@ -72,32 +74,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
                         </div>
                     </Card> */}
                     <div className="homepage-storelist">
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Item</th>
-                                    <th>Available Quantities</th>
-                                    <th>Brand</th>
-                                    <th>Notice</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    storeItem.map(each => {
-                                        return (
-                                            <tr>
-                                                <td>{each.item_id}</td>
-                                                <td>{each.item_name}</td>
-                                                <td>{each.available_quantity - each.reserved_quantity}</td>
-                                                <td>{each.brand}</td>
-                                                <td>{each.notice}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </Table>
+                        <BasicTable/>
                     </div>
                 </div>
             }
