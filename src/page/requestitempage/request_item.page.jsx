@@ -1,9 +1,8 @@
 import { Table } from 'react-bootstrap'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import './request_item.scss'
 import "react-datetime/css/react-datetime.css";
 import Datetime from 'react-datetime'
-
 
 import { Redirect } from 'react-router-dom'
 
@@ -15,20 +14,83 @@ import { connect } from 'react-redux'
 import { ADD_TO_SUMMARY, SUBMIT_REQUEST_ASYNC } from '../../redux/requestitem/requestitem.action'
 import { FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
+import { useTable } from 'react-table'
+
 const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching, redirectTo, storeItems, summaryItems, submit_request}) => {
 
-    const [request_quantity, handleRequestQuantity] = useState({})
+    const [request_quantity, handleRequestQuantity] = useState([])
     const [project_name, handleProjectName] = useState('')
     const [collection_date, handleCollectionDate] = useState('')
 
-    const handleDynamicInput = (event, item_name) => handleRequestQuantity({
-        ...request_quantity,
-        [item_name]: event.target.value
-    })
+    const handleDynamicInput = (event, item_name) => {
+        const copy = [].concat(request_quantity)
+        const deliver = copy.map(each => {
+            if(each[item_name] !== item_name){
+                return each
+            }
+            else {
+                return {
+                    "item_name": item_name,
+                    "quantity": event.target.value
+                }
+            }
+        })
+        console.log(deliver)
+        handleRequestQuantity(deliver)
+    }
 
-    useEffect(() => {
-        fetch_items()
-    }, [])
+    const columns = useMemo(() => [
+        {
+            Header: '#',
+            accessor: 'item_id'
+        },
+        {
+            Header: 'Item',
+            accessor: 'item_name'
+        },
+        {
+            Header: 'A.Quantities',
+            accessor: 'available_quantity'
+        },
+        {
+            Header: 'Request Quantities',
+            Cell: ({row}) => {
+                return <input type='number' min='0' id={row.original.item_id} onChange={(event) => handleDynamicInput(event, row.original.item_name)} />
+            }
+        },
+        {
+            Header: 'Brand',
+            accessor: 'brand'
+        },
+        {
+            Header: 'Notice',
+            accessor: 'notice'
+        },
+        {
+            Header: 'Action',
+            Cell: ({row}) => {
+                return <Button variant="primary" onClick={() => add_to_summary({"name": row.original.item_name, "quantity": request_quantity[row.original.item_name], "item_id": row.original.item_id})}>Add</Button>
+            }
+        }
+    ], [])
+
+
+    const data = React.useMemo(() => storeItems,[])
+    const tableInstance = useTable({ columns, data })
+        
+    const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    } = tableInstance
+
+    // useEffect(() => {
+    //     fetch_items()
+    // }, [])
+
+
 
     if(redirectTo.length !== 0){
         return <Redirect to={redirectTo} />
@@ -59,34 +121,45 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                             />
                         </div>
                     </div>
-                    <Table striped bordered hover size="sm">
+                    <Table {...getTableProps()}>
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Item Name</th>
-                                <th>Available Quantities</th>
-                                <th>Notice</th>
-                                <th>Request Quantities</th>
-                                <th>Action</th>
+                        {// Loop over the header rows
+                        headerGroups.map(headerGroup => (
+                            // Apply the header row props
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                            {// Loop over the headers in each row
+                            headerGroup.headers.map(column => (
+                                // Apply the header cell props
+                                <th {...column.getHeaderProps()}>
+                                {// Render the header
+                                column.render('Header')}
+                                </th>
+                            ))}
                             </tr>
+                        ))}
                         </thead>
-                        <tbody>
-                            {
-                                storeItems.map(item => {
-                                    return (
-                                        <tr key={item.item_id}>
-                                            <td>{item.item_id}</td>
-                                            <td>{item.item_name}</td>
-                                            <td>{item.available_quantity}</td>
-                                            <td>{item.notice}</td>
-                                            <td>
-                                                <Form.Control type='number' min='0' id={item.item_id} onChange={(event) => handleDynamicInput(event, item.item_name)}></Form.Control>
-                                            </td>
-                                            <td><Button variant="primary" onClick={() => add_to_summary({name: item.item_name, quantity: request_quantity[item.item_name], "item_id": item.item_id})}>Add</Button></td>
-                                        </tr> 
-                                    )
-                                })
-                            }
+                        {/* Apply the table body props */}
+                        <tbody {...getTableBodyProps()}>
+                        {// Loop over the table rows
+                        rows.map(row => {
+                            // Prepare the row for display
+                            prepareRow(row)
+                            return (
+                            // Apply the row props
+                            <tr {...row.getRowProps()}>
+                                {// Loop over the rows cells
+                                row.cells.map(cell => {
+                                // Apply the cell props
+                                return (
+                                    <td {...cell.getCellProps()}>
+                                    {// Render the cell contents
+                                    cell.render('Cell')}
+                                    </td>
+                                )
+                                })}
+                            </tr>
+                            )
+                        })}
                         </tbody>
                     </Table>
                     <Button variant="success" type="button"

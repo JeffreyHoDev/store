@@ -27,6 +27,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
 
     useEffect(() => {
         fetch_pie(defaultStartDate, todayDate)
+        fetch_line(defaultStartDate, todayDate)
         fetchItem()
     }, [])
     
@@ -57,7 +58,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
                             <PieChart/>
                         </div>
                     </Card>
-                    {/* <Card className="chart-container">
+                    <Card className="chart-container">
                         <div className='chart-query'>
                             <div className="start_date_container">
                                 <label htmlFor="line_startdate">Start Date: </label>
@@ -72,7 +73,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
                         <div>
                             <LineChart/>
                         </div>
-                    </Card> */}
+                    </Card>
                     <div className="homepage-storelist">
                         <BasicTable/>
                     </div>

@@ -14,7 +14,7 @@ const LineChart = ({ line_data }) => {
 				autoFit
 				height={500}
 				data={line_data}
-				scale={{ value: { min: 0 } }}
+				scale={{ value: { min: 0, max: 10000 } }}
 				// onLineMouseleave={console.log}
 				// onPointClick={console.warn}
 				onAxisLabelClick={(e => {

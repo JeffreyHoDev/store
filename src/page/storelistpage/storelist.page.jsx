@@ -1,17 +1,67 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useMemo } from 'react'
 import './storelist.scss'
 
 import { Table, Button, Spinner } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom' 
 
 import { connect } from 'react-redux'
-import {DISPLAY_ADDITEM_COMPONENT, FETCH_ITEM_ASYNC} from '../../redux/storeitem/storeitem.action'
+import { DISPLAY_ADDITEM_COMPONENT, FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
+
+import { useTable } from 'react-table'
 
 const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redirectTo }) => {
 
-    useEffect(() => {
-        fetchItem()
-    },[])
+    // useEffect(() => {
+    //     fetchItem()
+    // },[])
+
+    const columns = useMemo(() => [
+        {
+            Header: '#',
+            accessor: 'item_id'
+        },
+        {
+            Header: 'Item',
+            accessor: 'item_name'
+        },
+        {
+            Header: 'A.Quantities',
+            accessor: 'available_quantity'
+        },
+        {
+            Header: 'reserve',
+            accessor: 'reserved_quantity'
+        },
+        {
+            Header: 'Brand',
+            accessor: 'brand'
+        },
+        {
+            Header: 'Notice',
+            accessor: 'notice'
+        },
+        {
+            Header: 'Action',
+            accessor: 'action',
+            Cell: ({row}) => {
+                return <Link to={`/edit/${row.original.item_id}`}>Detail</Link>
+            }
+        }
+    ], [])
+
+
+    const data = React.useMemo(() => storeItem,[])
+    
+    const tableInstance = useTable({ columns, data })
+        
+    const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    } = tableInstance
+
     
     const history = useHistory()
 
@@ -27,34 +77,46 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redire
             <Button variant='info' className='addItem_btn' onClick={toggleAddItem}>Add Item</Button>
             {
                 isFetching? <Spinner animation="border" variant="success" />
-                :<Table striped bordered hover>
+                :
+                <Table {...getTableProps()}>
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Available Quantities</th>
-                            <th>Reserved Quantities</th>
-                            <th>Brand</th>
-                            <th>Notice</th>
-                            <th>Action</th>
+                    {// Loop over the header rows
+                    headerGroups.map(headerGroup => (
+                        // Apply the header row props
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        {// Loop over the headers in each row
+                        headerGroup.headers.map(column => (
+                            // Apply the header cell props
+                            <th {...column.getHeaderProps()}>
+                            {// Render the header
+                            column.render('Header')}
+                            </th>
+                        ))}
                         </tr>
+                    ))}
                     </thead>
-                    <tbody>
-                        {
-                            storeItem.map(each => {
-                                return (
-                                    <tr>
-                                        <td>{each.item_id}</td>
-                                        <td>{each.item_name}</td>
-                                        <td>{each.available_quantity}</td>
-                                        <td>{each.reserved_quantity}</td>
-                                        <td>{each.brand}</td>
-                                        <td>{each.notice}</td>
-                                        <td><Link to={`/edit/${each.item_id}`}>Edit</Link></td>
-                                    </tr>
-                                )
-                            })
-                        }
+                    {/* Apply the table body props */}
+                    <tbody {...getTableBodyProps()}>
+                    {// Loop over the table rows
+                    rows.map(row => {
+                        // Prepare the row for display
+                        prepareRow(row)
+                        return (
+                        // Apply the row props
+                        <tr {...row.getRowProps()}>
+                            {// Loop over the rows cells
+                            row.cells.map(cell => {
+                            // Apply the cell props
+                            return (
+                                <td {...cell.getCellProps()}>
+                                {// Render the cell contents
+                                cell.render('Cell')}
+                                </td>
+                            )
+                            })}
+                        </tr>
+                        )
+                    })}
                     </tbody>
                 </Table>
             }
