@@ -54,6 +54,18 @@ export const ADD_NEW_USER_FAILED = (error) => ({
     payload: error
 })
 
+export const LOGIN_USER_START = () => ({
+    type: USER_CONSTANT.LOGIN_USER_START
+})
+export const LOGIN_USER_SUCCESS = (data) => ({
+    type: USER_CONSTANT.LOGIN_USER_SUCCESS,
+    payload: data
+})
+export const LOGIN_USER_FAILED = (error) => ({
+    type: USER_CONSTANT.LOGIN_USER_FAILED,
+    payload: error
+})
+
 
 // START - ASYNC action handler
 export const DELETE_USER_ASYNC = (user_id) => {
@@ -151,6 +163,26 @@ export const FETCH_SINGLEUSER_ASYNC = (id) => {
             dispatch(FETCH_SINGLEUSER_FROM_DATABASE_SUCCESS(data))
         })
         .catch(err => dispatch(FETCH_SINGLEUSER_FROM_DATABASE_FAILED(err)))
+    }
+}
+
+export const LOGIN_USER_ASYNC = (data) => {
+    return dispatch => {
+        dispatch(LOGIN_USER_START())
+        fetch('http://localhost:50000/login_user', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            dispatch(LOGIN_USER_SUCCESS(result))
+            dispatch(RedirectTo('/'))
+            dispatch(ResetRedirect())
+        })
+        .catch(err => dispatch(LOGIN_USER_FAILED(err)))
     }
 }
 // END - ASYNC action handler

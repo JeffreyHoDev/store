@@ -5,8 +5,6 @@ const port = 50000
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const moment = require('moment')
-
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -61,13 +59,39 @@ app.post('/verify', (req,res) => {
 
 app.post('/add_new_user', (req,res) => {
     const {name, email, role, password} = req.body
-    knex('users').insert({
-        "name": name,
-        "email": email,
-        "role": role,
-        "password": password
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        knex('users').insert({
+            "name": name,
+            "email": email,
+            "role": role,
+            "password": hash
+        })
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
     })
-    .then(data => res.json(data))
+})
+
+app.post('/login_user', (req,res) => {
+    const { name, email, password } = req.body
+    knex('users').select().where({
+        "name": name,
+        "email": email
+    })
+    .then(result_fromDB => {
+        bcrypt.compare(password, result_fromDB[0].password, function(err, result) {
+            if(result){
+                const responseData = {
+                    "name": result_fromDB[0]["name"],
+                    "email": result_fromDB[0]["email"],
+                    "role": result_fromDB[0]["role"]
+                }
+                res.json(responseData)
+            }
+            else {
+                res.json("Wrong Credentials")
+            }
+        })
+    })
     .catch(err => res.json(err))
 })
 
@@ -115,7 +139,7 @@ app.post('/add_new_item', (req,res) => {
 })
 
 app.post('/fetch_store_items', (req,res) => {
-    knex.select().table('items_management')
+    knex.select().table('items_management').orderBy('item_id', 'asc')
     .then(result => res.json(result))
     .catch(err => res.json(err))
 })

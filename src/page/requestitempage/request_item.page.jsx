@@ -8,35 +8,47 @@ import { Redirect } from 'react-router-dom'
 
 import RequestItemSummary from '../../component/request_item_summary/request_item_summary.component'
 
-import { Button, Form, Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import { ADD_TO_SUMMARY, SUBMIT_REQUEST_ASYNC } from '../../redux/requestitem/requestitem.action'
+import { SUBMIT_REQUEST_ASYNC, FETCH_ONE_FOR_REQUEST_ASYNC } from '../../redux/requestitem/requestitem.action'
 import { FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
-import { useTable } from 'react-table'
+import { useTable, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
 
-const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching, redirectTo, storeItems, summaryItems, submit_request}) => {
+const RequestItemPage = ({fetch_request_one, fetch_items, errorMessage, isFetching, redirectTo, storeItems, summaryItems, submit_request}) => {
 
-    const [request_quantity, handleRequestQuantity] = useState([])
     const [project_name, handleProjectName] = useState('')
     const [collection_date, handleCollectionDate] = useState('')
 
-    const handleDynamicInput = (event, item_name) => {
-        const copy = [].concat(request_quantity)
-        const deliver = copy.map(each => {
-            if(each[item_name] !== item_name){
-                return each
-            }
-            else {
-                return {
-                    "item_name": item_name,
-                    "quantity": event.target.value
-                }
-            }
-        })
-        console.log(deliver)
-        handleRequestQuantity(deliver)
+    useEffect(() => {
+        fetch_items()
+    }, [])
+
+    function GlobalFilter({
+        preGlobalFilteredRows,
+        globalFilter,
+        setGlobalFilter,
+    }) {
+        const count = preGlobalFilteredRows.length
+        const [value, setValue] = useState(globalFilter)
+        const onChange = useAsyncDebounce(value => {
+            setGlobalFilter(value || undefined)
+        }, 200)
+    
+        return (
+            <span>
+                <input
+                    className="form-control"
+                    value={value || ""}
+                    onChange={e => {
+                        setValue(e.target.value);
+                        onChange(e.target.value);
+                    }}
+                    placeholder="Search Item..."
+                />
+            </span>
+        )
     }
 
     const columns = useMemo(() => [
@@ -49,16 +61,6 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
             accessor: 'item_name'
         },
         {
-            Header: 'A.Quantities',
-            accessor: 'available_quantity'
-        },
-        {
-            Header: 'Request Quantities',
-            Cell: ({row}) => {
-                return <input type='number' min='0' id={row.original.item_id} onChange={(event) => handleDynamicInput(event, row.original.item_name)} />
-            }
-        },
-        {
             Header: 'Brand',
             accessor: 'brand'
         },
@@ -69,14 +71,14 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
         {
             Header: 'Action',
             Cell: ({row}) => {
-                return <Button variant="primary" onClick={() => add_to_summary({"name": row.original.item_name, "quantity": request_quantity[row.original.item_name], "item_id": row.original.item_id})}>Add</Button>
+                return <Button variant="primary" onClick={() => fetch_request_one(row.original.item_id)}>Request</Button>
             }
         }
     ], [])
 
 
     const data = React.useMemo(() => storeItems,[])
-    const tableInstance = useTable({ columns, data })
+    const tableInstance = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 5} },useFilters, useGlobalFilter, usePagination, )
         
     const {
     getTableProps,
@@ -84,13 +86,19 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
     headerGroups,
     rows,
     prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state: { pageIndex, pageSize, globalFilter}
     } = tableInstance
-
-    // useEffect(() => {
-    //     fetch_items()
-    // }, [])
-
-
 
     if(redirectTo.length !== 0){
         return <Redirect to={redirectTo} />
@@ -121,6 +129,11 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                             />
                         </div>
                     </div>
+                    <GlobalFilter
+                        preGlobalFilteredRows={preGlobalFilteredRows}
+                        globalFilter={globalFilter}
+                        setGlobalFilter={setGlobalFilter}
+                    />
                     <Table {...getTableProps()}>
                         <thead>
                         {// Loop over the header rows
@@ -141,7 +154,7 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                         {/* Apply the table body props */}
                         <tbody {...getTableBodyProps()}>
                         {// Loop over the table rows
-                        rows.map(row => {
+                        page.map(row => {
                             // Prepare the row for display
                             prepareRow(row)
                             return (
@@ -162,6 +175,52 @@ const RequestItemPage = ({add_to_summary, fetch_items, errorMessage, isFetching,
                         })}
                         </tbody>
                     </Table>
+                    <ul className="pagination-utilities">
+                        <div className="page-item" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                            First
+                        </div>
+                        <div className="page-item" onClick={() => previousPage()} disabled={!canPreviousPage}>
+                            {'<'}
+                        </div>
+                        <div className="page-item" onClick={() => nextPage()} disabled={!canNextPage}>
+                            {'>'}
+                        </div>
+                        <div className="page-item" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                            Last
+                        </div>
+                        <div>
+                            Page{' '}
+                            <strong>
+                                {pageIndex + 1} of {pageOptions.length}
+                            </strong>{' '}
+                        </div>
+                        <div>
+                                <input
+                                    className="form-control"
+                                    type="number"
+                                    defaultValue={pageIndex + 1}
+                                    onChange={e => {
+                                        const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                        gotoPage(page)
+                                    }}
+                                    style={{ width: '100px', height: '20px' }}
+                                />
+                        </div>{' '}
+                        <select
+                            className="form-control"
+                            value={pageSize}
+                            onChange={e => {
+                                setPageSize(Number(e.target.value))
+                            }}
+                            style={{ width: '120px', height: '38px' }}
+                        >
+                            {[5, 10, 20, 30, 40, 50].map(pageSize => (
+                                <option key={pageSize} value={pageSize}>
+                                    Show {pageSize}
+                                </option>
+                            ))}
+                        </select>
+                    </ul>
                     <Button variant="success" type="button"
                         onClick={() => submit_request({
                             "collection_date": collection_date,
@@ -190,9 +249,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    add_to_summary: (item) => dispatch(ADD_TO_SUMMARY(item)),
     fetch_items: () => dispatch(FETCH_ITEM_ASYNC()),
-    submit_request: (dataObj) => dispatch(SUBMIT_REQUEST_ASYNC(dataObj))
+    submit_request: (dataObj) => dispatch(SUBMIT_REQUEST_ASYNC(dataObj)),
+    fetch_request_one: (item_id) => dispatch(FETCH_ONE_FOR_REQUEST_ASYNC(item_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestItemPage)

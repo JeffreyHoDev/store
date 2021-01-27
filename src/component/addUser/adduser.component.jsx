@@ -47,7 +47,7 @@ const AddUser = ({authorized, capturedID, resetAuthorized, addUser, errorMessage
                                 {isAdding ? <Spinner animation="border" variant="success" /> : null}
                             </Button>
                             {
-                                errorMessage.length !== 0? <p>{errorMessage}</p>: null
+                                errorMessage.length !== 0? <p>{JSON.stringify(errorMessage)}</p>: null
                             }
                         </Form>    
                     </div>

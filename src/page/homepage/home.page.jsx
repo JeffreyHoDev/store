@@ -1,11 +1,11 @@
 import React from 'react'
 import './home.scss'
 
-import { Button } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { Card, Spinner } from 'react-bootstrap'
+import { Card, Spinner, Button } from 'react-bootstrap'
 
 import BasicTable from '../../component/table/table.component'
 
@@ -58,7 +58,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
                             <PieChart/>
                         </div>
                     </Card>
-                    <Card className="chart-container">
+                    {/* <Card className="chart-container">
                         <div className='chart-query'>
                             <div className="start_date_container">
                                 <label htmlFor="line_startdate">Start Date: </label>
@@ -73,7 +73,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
                         <div>
                             <LineChart/>
                         </div>
-                    </Card>
+                    </Card> */}
                     <div className="homepage-storelist">
                         <BasicTable/>
                     </div>
@@ -85,7 +85,7 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
 
 const mapStateToProps = state => ({
     storeItem: state.StoreItemReducer.storeItem,
-    isFetching: state.StoreItemReducer.is_fetching,
+    isFetching: state.StoreItemReducer.is_fetching
 })
 
 const mapDispatchToProps = dispatch => ({

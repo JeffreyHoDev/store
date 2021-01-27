@@ -8,6 +8,7 @@ import FulfillPage from './page/fulfillpage/fulfill.page';
 import Verification from './component/verification/verification.component'
 import AddUser from './component/addUser/adduser.component'
 import DeleteUser from './component/deleteUser/deleteuser.component'
+import RequestItemComponent from './component/requestItem/requestitem.component'
 // End Importing components
 
 // Start importing page components
@@ -22,12 +23,16 @@ import UserManagementPage from './page/usermanagementpage/usermanagement.page'
 // Start Importing React Router
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import EditItemPage from './page/edititempage/edititem.page';
 // End Importing React Router
 
-function App() {
+import { connect } from 'react-redux'
+
+const App = ({ isLoggedIn }) => {
+  
   return (
     <Router>
       <div className="App">
@@ -35,6 +40,12 @@ function App() {
       <AddUser />
       <DeleteUser />
       <Verification />
+      <RequestItemComponent />
+      <Route path='/login'>
+        <LoginPage />
+      </Route>
+      {
+        isLoggedIn ?
         <div className='App-content'>
           <Sidebar className='sidebar-main'/>
           <Topbar className='topbar-main'/>
@@ -57,9 +68,6 @@ function App() {
               <Route path='/store_list'>
                 <StoreListPage />
               </Route>
-              <Route path='/login'>
-                <LoginPage />
-              </Route>
               <Route path='/history'>
                 <RequestListPage />
               </Route>
@@ -68,9 +76,17 @@ function App() {
               </Route>
           </div>
         </div>
+        :              
+        <Redirect to="/login"/>
+      }
       </div>
     </Router>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  profile: state.UserReducer.profile,
+  isLoggedIn: state.UserReducer.isLoggedIn
+})
+
+export default connect(mapStateToProps)(App);

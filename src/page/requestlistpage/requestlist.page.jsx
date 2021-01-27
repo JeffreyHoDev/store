@@ -47,7 +47,7 @@ const RequestListPage = ({ fetch_fulfilled_requests, fetch_requests, isFetching,
                                 <td>{request.project_name}</td>
                                 <td>{request.requestor}</td>
                                 <td>{request.collection_date}</td>
-                                <td><Link to={`/fulfill/${request.request_id}`}>Detail</Link></td>
+                                <td><Link className="link-btn" to={`/fulfill/${request.request_id}`}>Detail</Link></td>
                             </tr>
                             )
                         })

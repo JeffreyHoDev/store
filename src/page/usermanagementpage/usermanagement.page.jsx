@@ -9,16 +9,16 @@ import { FETCH_USERS_ASYNC } from '../../redux/user/user.action'
 import { useHistory } from 'react-router-dom'
 
 const UserManagementPage = ({ userList, showVerification, fetchUsers, is_fetching, redirectTo }) => {
-
-    useEffect(() => {
-        fetchUsers()
-    }, [])
-
+    
     const history = useHistory()
 
     if(redirectTo === "reload"){
         history.go(0)
     }
+
+    useEffect(() => {
+        fetchUsers()
+    }, [])
 
     return (
         <div>

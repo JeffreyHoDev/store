@@ -31,3 +31,18 @@
     text-decoration: underline;
     color: rgb(182, 182, 182);
 }
+
+.pagination-utilities {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.page-item {
+    cursor: pointer;
+    &:hover {
+        color: grey;
+    }
+}

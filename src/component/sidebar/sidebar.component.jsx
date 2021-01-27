@@ -1,9 +1,11 @@
 import React from 'react'
 import './sidebar.scss'
 
+import { connect } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 
-const Sidebar = () => {
+const Sidebar = ({ profile, isLoggedIn}) => {
     return (
         <div className='sidebar'>
             <nav className='sidebar-nav'>
@@ -17,5 +19,10 @@ const Sidebar = () => {
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    isLoggedIn: state.UserReducer.isLoggedIn,
+    profile: state.UserReducer.profile
+})
 
 export default Sidebar

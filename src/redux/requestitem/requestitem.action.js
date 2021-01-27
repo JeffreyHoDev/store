@@ -71,6 +71,24 @@ export const FETCH_SINGLEREQUEST_FAILED = (error) => ({
     payload: error
 })
 
+export const FETCH_ONE_FOR_REQUEST_START = () => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_START
+})
+
+export const FETCH_ONE_FOR_REQUEST_SUCCESS = (data) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_SUCCESS,
+    payload: data
+})
+
+export const FETCH_ONE_FOR_REQUEST_FAILED = (error) => ({
+    type: REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_FAILED,
+    payload: error
+})
+
+export const SHOW_REQUEST_ITEM_COMPONENT = () => ({
+    type: REQUEST_ITEM_CONSTANT.SHOW_REQUEST_ITEM_COMPONENT
+})
+
 // START - ASYNC action handler
 export const SUBMIT_REQUEST_ASYNC = (dataObj) => {
     return dispatch => {
@@ -160,5 +178,26 @@ export const FETCH_SINGLEREQUEST_ASYNC = (request_id) => {
         })
         .catch(err => dispatch(FETCH_SINGLEREQUEST_FAILED(err)))
     }
-} 
+}
+
+export const FETCH_ONE_FOR_REQUEST_ASYNC = (item_id) => {
+    return dispatch => {
+        dispatch(FETCH_ONE_FOR_REQUEST_START())
+        fetch('http://localhost:50000/fetch_single_item', {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+                "item_id": item_id
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            dispatch(FETCH_ONE_FOR_REQUEST_SUCCESS(data))
+            dispatch(SHOW_REQUEST_ITEM_COMPONENT())
+        })
+        .catch(err => dispatch(FETCH_ONE_FOR_REQUEST_FAILED(err)))
+    }
+}
 // END - ASYNC action handler

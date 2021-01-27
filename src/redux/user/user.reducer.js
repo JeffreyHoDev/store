@@ -4,7 +4,10 @@ const INITIAL_STATE = {
     is_adding: false,
     user_list: [],
     is_fetching: false,
-    singleUser: []
+    singleUser: [],
+    isLoggedIn: false,
+    is_logging_in: false,
+    profile: []
 }
 
 export const UserReducer = (state=INITIAL_STATE, action) => {
@@ -76,6 +79,25 @@ export const UserReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 is_adding: false,
+                errorMessage: action.payload
+            }
+        case "LOGIN_USER_START":
+            return {
+                ...state,
+                is_logging_in: true
+            }
+        case "LOGIN_USER_SUCCESS":
+            return {
+                ...state,
+                is_logging_in: false,
+                errorMessage: "",
+                isLoggedIn: true,
+                profile: [].concat(action.payload)
+            }
+        case "LOGIN_USER_FAILED":
+            return {
+                ...state,
+                is_logging_in: false,
                 errorMessage: action.payload
             }
         default:

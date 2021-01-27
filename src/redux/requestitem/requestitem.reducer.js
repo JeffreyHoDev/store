@@ -4,11 +4,13 @@ const INITIAL_STATE = {
     summaryItems: [],
     errorMessage: "",
     is_submitting: false,
+    showRequestComponent: false,
     requestList: [],
     is_fetching: false,
     is_singleFetching: false,
     singleRequest: [],
-    request_items_detail: []
+    request_items_detail: [],
+    oneItemRequest: []
 }
 
 const RequestItemReducer = (state=INITIAL_STATE, action) => {
@@ -20,13 +22,15 @@ const RequestItemReducer = (state=INITIAL_STATE, action) => {
                         state.summaryItems.splice(index, 1)
                         return {
                             ...state,
-                            summaryItems: state.summaryItems.concat(action.payload)
+                            summaryItems: state.summaryItems.concat(action.payload),
+                            showRequestComponent: !state.showRequestComponent
                         }
                     }
                 })
                 return {
                     ...state,
-                    summaryItems: state.summaryItems.concat(action.payload)
+                    summaryItems: state.summaryItems.concat(action.payload),
+                    showRequestComponent: !state.showRequestComponent
                 }
             }
             else {
@@ -75,6 +79,24 @@ const RequestItemReducer = (state=INITIAL_STATE, action) => {
                 is_fetching: false,
                 errorMessage: action.payload
             }
+        case REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_START:
+            return {
+                ...state,
+                is_fetching: true
+            }
+        case REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_SUCCESS:
+            return {
+                ...state,
+                is_fetching: false,
+                errorMessage: "",
+                oneItemRequest: Array.from(action.payload)
+            }
+        case REQUEST_ITEM_CONSTANT.FETCH_ONE_FOR_REQUEST_FAILED:
+            return {
+                ...state,
+                is_fetching: false,
+                errorMessage: action.payload
+            }
         case REQUEST_ITEM_CONSTANT.FETCH_FULFILLED_REQUEST_START:
             return {
                 ...state,
@@ -117,6 +139,11 @@ const RequestItemReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 errorMessage: "",
                 summaryItems: []
+            }
+        case REQUEST_ITEM_CONSTANT.SHOW_REQUEST_ITEM_COMPONENT:
+            return {
+                ...state,
+                showRequestComponent: !state.showRequestComponent
             }
         default:
             return state
