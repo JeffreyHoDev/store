@@ -46,3 +46,12 @@
         color: grey;
     }
 }
+
+@media only screen and (max-width: 1000px) {
+    .request_item {
+        &_others {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

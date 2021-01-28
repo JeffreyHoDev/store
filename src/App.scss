@@ -27,3 +27,23 @@
   grid-row: 1/2;
   
 }
+
+@media only screen and (max-width: 800px) {
+  .App {
+
+    min-height: 100vh;
+    min-width: 95vw;
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+    }
+  
+  }
+
+  .sidebar_small_screen {
+    display: none;
+  }
+
+  
+}

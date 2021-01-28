@@ -5,7 +5,9 @@ import { Nav, Spinner } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 
-const Topbar = ({ profile }) => {
+import { TOOGLE_SIDEBAR_IN_SMALL_SCREEN } from '../../redux/scaling/scaling.action'
+
+const Topbar = ({ profile, toogle_sidebar }) => {
 
     return (
         <div className='topbar-nav'>
@@ -13,6 +15,7 @@ const Topbar = ({ profile }) => {
                 profile.length <= 0 ? <Spinner variant="success"/>
                 :
                 <Nav.Item className='topbar-nav-item'>
+                <div className="icon" onClick={() => toogle_sidebar()}>Icon here</div>
                     <h5>{profile[0]["name"]}</h5>
                     <h5>{profile[0]["email"]}</h5>
                     <h5>{profile[0]["role"]}</h5>
@@ -26,4 +29,8 @@ const mapStateToProps = state => ({
     profile: state.UserReducer.profile
 })
 
-export default connect(mapStateToProps)(Topbar)
+const mapDispatchToProps = dispatch => ({
+    toogle_sidebar: () => dispatch(TOOGLE_SIDEBAR_IN_SMALL_SCREEN())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar)

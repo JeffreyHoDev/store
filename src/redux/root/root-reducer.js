@@ -6,6 +6,7 @@ import verificationReducer from '../verification/verification.reducer'
 import UrlReducer from '../url/url.reducer'
 import FulfillRequestReducer from '../fulfillrequest/fulfillrequest.reducer'
 import ChartReducer from '../chart/chart.reducer'
+import ScalingReducer from '../scaling/scaling.reducer'
 
 const rootReducer = combineReducers({
     RequestItemReducer: RequestItemReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     UserReducer: UserReducer,
     UrlReducer: UrlReducer,
     FulfillRequestReducer: FulfillRequestReducer,
-    ChartReducer: ChartReducer
+    ChartReducer: ChartReducer,
+    ScalingReducer: ScalingReducer
 })
 
 export default rootReducer
