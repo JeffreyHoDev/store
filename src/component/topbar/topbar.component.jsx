@@ -1,14 +1,29 @@
 import React from 'react'
 import './topbar.scss'
 
-const Topbar = () => {
+import { Nav, Spinner } from 'react-bootstrap'
+
+import { connect } from 'react-redux'
+
+const Topbar = ({ profile }) => {
+
     return (
         <div className='topbar-nav'>
-            <div className='topbar-nav-item'>
-                Profile here
-            </div>
+            {
+                profile.length <= 0 ? <Spinner variant="success"/>
+                :
+                <Nav.Item className='topbar-nav-item'>
+                    <h5>{profile[0]["name"]}</h5>
+                    <h5>{profile[0]["email"]}</h5>
+                    <h5>{profile[0]["role"]}</h5>
+                </Nav.Item>
+            }
         </div>
     )
 }
 
-export default Topbar
+const mapStateToProps = state => ({
+    profile: state.UserReducer.profile
+})
+
+export default connect(mapStateToProps)(Topbar)

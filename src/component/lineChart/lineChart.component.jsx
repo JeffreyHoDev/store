@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Chart, Line, Point, Tooltip, Axis } from "bizcharts";
 import './linechart.scss'
 

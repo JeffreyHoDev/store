@@ -100,6 +100,12 @@ export const UserReducer = (state=INITIAL_STATE, action) => {
                 is_logging_in: false,
                 errorMessage: action.payload
             }
+        case "LOGOUT":
+            return {
+                ...state,
+                profile: [].concat([]),
+                isLoggedIn: false
+            }
         default:
             return state
     }

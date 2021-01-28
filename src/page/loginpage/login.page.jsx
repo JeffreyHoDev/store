@@ -30,7 +30,7 @@ const LoginPage = ({ login, redirectTo, errorMessage }) => {
                     We'll never share your email with anyone else.
                     </Form.Text>
                 </Form.Group>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group>
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your registered name" onChange={(e) => handleName(e.target.value)}/>
                 </Form.Group>
@@ -51,7 +51,7 @@ const LoginPage = ({ login, redirectTo, errorMessage }) => {
                 }}>
                     Submit
                 </Button>
-                {errorMessage !== "" > 0 ? <h4>{JSON.stringify(errorMessage)}</h4> : null}
+                {errorMessage !== "" ? <h4>{JSON.stringify(errorMessage)}</h4> : null}
             </Form>
         </div>
     )
@@ -60,8 +60,7 @@ const LoginPage = ({ login, redirectTo, errorMessage }) => {
 const mapStateToProps = state => ({
     isLoggedIn: state.UserReducer.isLoggedIn,
     redirectTo: state.UrlReducer.redirectLink,
-    errorMessage: state.UrlReducer.errorMessage,
-    isLoggedIn: state.UserReducer.isLoggedIn
+    errorMessage: state.UrlReducer.errorMessage
 })
 
 const mapDispatchToProps = dispatch =>  ({

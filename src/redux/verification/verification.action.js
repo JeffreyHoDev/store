@@ -42,7 +42,7 @@ export const verify_authorized_personAsync = (email, password) => {
         })
         .then(response => response.json())
         .then(data => {
-            if(data !== "Hi, it is there"){
+            if(data !== "OK"){
                 throw Error("Failed")
             }
             else {

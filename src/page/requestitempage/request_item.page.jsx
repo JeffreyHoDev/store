@@ -16,7 +16,7 @@ import { FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
 import { useTable, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
 
-const RequestItemPage = ({fetch_request_one, fetch_items, errorMessage, isFetching, redirectTo, storeItems, summaryItems, submit_request}) => {
+const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage, isFetching, redirectTo, storeItems, summaryItems, submit_request}) => {
 
     const [project_name, handleProjectName] = useState('')
     const [collection_date, handleCollectionDate] = useState('')
@@ -226,7 +226,7 @@ const RequestItemPage = ({fetch_request_one, fetch_items, errorMessage, isFetchi
                             "collection_date": collection_date,
                             "project_name": project_name,
                             "item_details": summaryItems,
-                            "requestor": "Jeffrey"
+                            "requestor": profile[0]["name"]
                         })}
                     >Submit Request</Button>
                     {errorMessage ? <p className="errorMessage">{errorMessage}</p> : null}
@@ -245,7 +245,8 @@ const mapStateToProps = state => ({
     storeItems: state.StoreItemReducer.storeItem,
     isFetching: state.StoreItemReducer.is_fetching,
     redirectTo: state.UrlReducer.redirectLink,
-    errorMessage: state.RequestItemReducer.errorMessage
+    errorMessage: state.RequestItemReducer.errorMessage,
+    profile: state.UserReducer.profile
 })
 
 const mapDispatchToProps = dispatch => ({

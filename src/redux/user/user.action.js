@@ -66,6 +66,10 @@ export const LOGIN_USER_FAILED = (error) => ({
     payload: error
 })
 
+export const LOGOUT = () => ({
+    type: USER_CONSTANT.LOGOUT
+})
+
 
 // START - ASYNC action handler
 export const DELETE_USER_ASYNC = (user_id) => {

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo } from 'react'
 import './storelist.scss'
 
 import { Table, Button, Spinner } from 'react-bootstrap'
-import { Link, useHistory } from 'react-router-dom' 
+import { Link } from 'react-router-dom' 
 
 import { connect } from 'react-redux'
 import { DISPLAY_ADDITEM_COMPONENT, FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
@@ -59,7 +59,6 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redire
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     page,
     canPreviousPage,
@@ -73,12 +72,9 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redire
     state: { pageIndex, pageSize}
     } = tableInstance
 
-    
-    const history = useHistory()
-
     // START - To reload this page after use add the item
     if(redirectTo === 'reload'){
-        history.go(0)
+        fetchItem()
     }
     // END - To reload this page after use add the item
 

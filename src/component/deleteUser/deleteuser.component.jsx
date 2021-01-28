@@ -8,6 +8,7 @@ import { RESET_AUTHORIZED } from '../../redux/verification/verification.action'
 import { DELETE_USER_ASYNC, FETCH_SINGLEUSER_ASYNC } from '../../redux/user/user.action'
 
 const DeleteUser = ({ singleUser, fetchUser, authorized, capturedID, resetAuthorized, deleteUserAsync, isDeleting }) => {
+    
     useEffect(() => {
         fetchUser(capturedID)
     }, [capturedID])

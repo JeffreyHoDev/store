@@ -6,14 +6,11 @@ import { Button, Table, Spinner } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { SHOW_VERIFICATION_COMPONENT } from '../../redux/verification/verification.action'
 import { FETCH_USERS_ASYNC } from '../../redux/user/user.action'
-import { useHistory } from 'react-router-dom'
 
 const UserManagementPage = ({ userList, showVerification, fetchUsers, is_fetching, redirectTo }) => {
-    
-    const history = useHistory()
 
     if(redirectTo === "reload"){
-        history.go(0)
+        fetchUsers()
     }
 
     useEffect(() => {

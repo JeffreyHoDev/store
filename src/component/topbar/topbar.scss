@@ -2,13 +2,19 @@
     
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     background-color: whitesmoke;
-    min-height: 4.5rem;
     min-width: 100%;
-    max-height: 4.5rem;
+    max-height: 6rem;
+    min-height: 6rem;
+    
 
     &-item {
-        font-size: 1.3rem;
+        max-height: max-content;
+
+        & h5 {
+            font-size: 1rem;
+        }
     }
 
 }

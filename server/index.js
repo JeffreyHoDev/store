@@ -27,32 +27,20 @@ app.get('/', (req,res) => {
 })
 
 app.post('/verify', (req,res) => {
-    const { name, email, password } = req.body
+    const { email, password } = req.body
     knex('users').select().where({
         'email': email,
-        'role': 'Admin',
-        'password': password
+        'role': 'Admin'
     })
     .then(data => {
-        if(data.length !== 0){
-            res.json("Hi, it is there")
-        }
-        else {
-            res.err("Wrong Credentials")
-        }
-    //   if(data[0].name === name){
-    //     bcrypt.compare(password, data[0].password, function(err, result) {
-    //       if(result){
-    //         res.json({
-    //           name: data[0].name,
-    //           email: data[0].email
-    //         })
-    //       }
-    //     });
-    //   }
-    //   else{
-    //     res.json("Wrong Credentials")
-    //   }
+        bcrypt.compare(password, data[0].password, function(err, result) {
+            if(result){
+                res.json("OK")
+            }
+            else {
+                res.json("Wrong Credentials")
+            }
+        })
     })
     .catch(err => res.json(err))
 })

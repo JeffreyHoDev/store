@@ -7,7 +7,7 @@ import { CLOSE_DISPLAY, verify_authorized_personAsync } from '../../redux/verifi
 
 import { connect } from 'react-redux'
 
-const Verification = ({verificationDisplay, closeDisplay, verify_authorized_personAsync}) => {
+const Verification = ({ verificationDisplay, closeDisplay, verify_authorized_personAsync, profile, errorMessage }) => {
     const [password, handlePassword] = useState('')
     return (
         <div>
@@ -19,7 +19,7 @@ const Verification = ({verificationDisplay, closeDisplay, verify_authorized_pers
                     <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" value="hokahwai@hotmail.com" readOnly />
+                            <Form.Control type="email" value={profile[0]["email"]} readOnly />
                             <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                             </Form.Text>
@@ -28,9 +28,10 @@ const Verification = ({verificationDisplay, closeDisplay, verify_authorized_pers
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" onChange={(e) => handlePassword(e.target.value)} />
                         </Form.Group>
-                        <Button variant="primary" type="button" onClick={() => verify_authorized_personAsync('hokahwai@hotmail.com', password)}>
+                        <Button variant="primary" type="button" onClick={() => verify_authorized_personAsync(profile[0]["email"], password)}>
                             Submit
                         </Button>
+                        {errorMessage !== ""  ? errorMessage.message : null }
                     </Form>            
                 </div>
             </div>
@@ -40,7 +41,9 @@ const Verification = ({verificationDisplay, closeDisplay, verify_authorized_pers
 }
 
 const mapStateToProps = (state) => ({
-    verificationDisplay: state.verificationReducer.verificationDisplay
+    verificationDisplay: state.verificationReducer.verificationDisplay,
+    profile: state.UserReducer.profile,
+    errorMessage: state.verificationReducer.errorMessage
 })
 
 const mapDispatchToProps = dispatch => ({

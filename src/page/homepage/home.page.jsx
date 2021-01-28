@@ -1,8 +1,6 @@
 import React from 'react'
 import './home.scss'
 
-import { Redirect } from 'react-router-dom'
-
 import { connect } from 'react-redux'
 
 import { Card, Spinner, Button } from 'react-bootstrap'
@@ -10,7 +8,6 @@ import { Card, Spinner, Button } from 'react-bootstrap'
 import BasicTable from '../../component/table/table.component'
 
 import PieChart from '../../component/pieChart/piechart.component'
-import LineChart from '../../component/lineChart/lineChart.component'
 
 import { useState, useEffect } from 'react'
 
@@ -33,8 +30,8 @@ const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) =
     
     const [pieStartDate, piehandleStart] = useState('')
     const [pieEndDate, piehandleEnd] = useState('')
-    const [lineStartDate, linehandleStart] = useState('')
-    const [lineEndDate, linehandleEnd] = useState('')
+    // const [lineStartDate, linehandleStart] = useState('')
+    // const [lineEndDate, linehandleEnd] = useState('')
 
     return (
         <div>
