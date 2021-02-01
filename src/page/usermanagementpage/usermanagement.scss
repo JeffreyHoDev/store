@@ -13,3 +13,11 @@
 .addUser_btn {
     margin: 1rem .5rem
 }
+
+@media only screen and (max-width: 500px) {
+
+    .delete-btn {
+        padding: 0.16rem 0.16rem
+    }
+
+}

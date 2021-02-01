@@ -1,4 +1,5 @@
 import React from 'react';
+import './table.scss'
 import { MDBDataTableV5 } from 'mdbreact';
 
 import { Spinner } from 'react-bootstrap'

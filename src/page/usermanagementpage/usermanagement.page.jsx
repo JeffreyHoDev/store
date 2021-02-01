@@ -44,7 +44,7 @@ const UserManagementPage = ({ userList, showVerification, fetchUsers, is_fetchin
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
-                                    <td><Button variant="danger" onClick={() => showVerification(user.id)}>Delete</Button></td>
+                                    <td><Button variant="danger" size="sm" className="delete-btn" onClick={() => showVerification(user.id)}>Delete</Button></td>
                                 </tr>
                             )
                         }) 

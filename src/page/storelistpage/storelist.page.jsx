@@ -148,7 +148,7 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redire
                                 </strong>{' '}
                             </a>
                         </li>
-                        <li>
+                        <li className="page-link-container">
                             <a className="page-link">
                                 <input
                                     className="form-control"
@@ -165,6 +165,7 @@ const StoreListPage = ({ toggleAddItem, fetchItem, storeItem, isFetching, redire
                         <select
                             className="form-control"
                             value={pageSize}
+                            className="page-link-container"
                             onChange={e => {
                                 setPageSize(Number(e.target.value))
                             }}

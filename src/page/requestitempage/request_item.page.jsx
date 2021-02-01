@@ -71,7 +71,7 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
         {
             Header: 'Action',
             Cell: ({row}) => {
-                return <Button variant="primary" onClick={() => fetch_request_one(row.original.item_id)}>Request</Button>
+                return <Button variant="primary" size="sm" className="to-summary-btn" onClick={() => fetch_request_one(row.original.item_id)}>Request</Button>
             }
         }
     ], [])
@@ -114,11 +114,11 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                     <h2>Request Item</h2>
                     <div className='request_item_others'>
                         <div className='request_item_projectContainer'>
-                            <label htmlFor='project'>Project:</label>
-                            <input type='text' onChange={(event) => handleProjectName(event.target.value)}></input>
+                            <label htmlFor='project' className="request-project-label">Project:</label>
+                            <input type='text' className="request-project-input" onChange={(event) => handleProjectName(event.target.value)}></input>
                         </div>
                         <div className='request_item_collectiondateContainer'>
-                            <label htmlFor='request_item_collectiondate'>Collection Date:</label>
+                            <label htmlFor='request_item_collectiondate' className="request-date-label">Collection Date:</label>
                             <Datetime inputProps={{
                                 placeholder: "Collection Date & Time"
                             }} 
@@ -126,6 +126,7 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                                 utc={true}
                                 initialValue=""
                                 name="request_item_collectiondate"
+                                className="request-date-input"
                             />
                         </div>
                     </div>
@@ -134,7 +135,7 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                         globalFilter={globalFilter}
                         setGlobalFilter={setGlobalFilter}
                     />
-                    <Table {...getTableProps()}>
+                    <Table {...getTableProps()} className="request-item-table">
                         <thead>
                         {// Loop over the header rows
                         headerGroups.map(headerGroup => (
@@ -194,7 +195,7 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                                 {pageIndex + 1} of {pageOptions.length}
                             </strong>{' '}
                         </div>
-                        <div>
+                        <div className="form-control-container">
                                 <input
                                     className="form-control"
                                     type="number"
@@ -203,16 +204,16 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                                         const page = e.target.value ? Number(e.target.value) - 1 : 0
                                         gotoPage(page)
                                     }}
-                                    style={{ width: '100px', height: '20px' }}
+                                    
                                 />
                         </div>{' '}
                         <select
-                            className="form-control"
+                            className="form-control-container"
                             value={pageSize}
                             onChange={e => {
                                 setPageSize(Number(e.target.value))
                             }}
-                            style={{ width: '120px', height: '38px' }}
+                            
                         >
                             {[5, 10, 20, 30, 40, 50].map(pageSize => (
                                 <option key={pageSize} value={pageSize}>
@@ -221,7 +222,7 @@ const RequestItemPage = ({ profile, fetch_request_one, fetch_items, errorMessage
                             ))}
                         </select>
                     </ul>
-                    <Button variant="success" type="button"
+                    <Button variant="success" type="button" className="submit-request-btn"
                         onClick={() => submit_request({
                             "collection_date": collection_date,
                             "project_name": project_name,
