@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 
-// const PUBLIC_URL = path.join(__dirname,'..','public')
-const PUBLIC_URL = "https://storeplatform.herokuapp.com/"
+const PUBLIC_URL = path.join(__dirname,'..','public')
+
 console.log(PUBLIC_URL)
 const saltRounds = 10;
 
