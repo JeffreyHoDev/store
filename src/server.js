@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const app = express()
 const port = 50000
 
@@ -9,21 +10,16 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 app.use(bodyParser());
+app.use(express.static(path.join(__dirname, 'build')))
 app.use(cors());
 
 const knex = require('knex')({
     client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : 'Reunion94!',
-      database : 'supplychainmanagement',
-      timezone: 'UTC'
-    }
+    connection: 'postgres://cwesqmxv:oKHQbklcZncbiryREWNMUGi63jY167l-@satao.db.elephantsql.com:5432/cwesqmxv'
 });
 
 app.get('/', (req,res) => {
-    res.send("Hello")
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 })
 
 app.post('/verify', (req,res) => {

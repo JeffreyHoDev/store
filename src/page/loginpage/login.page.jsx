@@ -51,6 +51,10 @@ const LoginPage = ({ login, redirectTo, errorMessage }) => {
                 }}>
                     Submit
                 </Button>
+                <p className="demo-message">Please use the following to login (Demo)</p>
+                <p className="demo-message">Email: demo@demo.com</p>
+                <p className="demo-message">Name: Demo</p>
+                <p className="demo-message">Password: Demo12345</p>
                 {errorMessage !== "" ? <h4>{JSON.stringify(errorMessage)}</h4> : null}
             </Form>
         </div>
