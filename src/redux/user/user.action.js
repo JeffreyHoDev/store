@@ -176,7 +176,7 @@ export const LOGIN_USER_ASYNC = (data) => {
         fetch('https://storeplatform.herokuapp.com:50000/login_user', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json" 
             },
             body: JSON.stringify(data)
         })
