@@ -153,7 +153,7 @@ export const FETCH_USERS_ASYNC = () => {
 export const FETCH_SINGLEUSER_ASYNC = (id) => {
     return dispatch => {
         dispatch(FETCH_SINGLEUSER_FROM_DATABASE_START)
-        fetch('http://localhost:50000/fetch_single_user',{
+        fetch('https://storeplatform.herokuapp.com:59196/fetch_single_user',{
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -173,7 +173,7 @@ export const FETCH_SINGLEUSER_ASYNC = (id) => {
 export const LOGIN_USER_ASYNC = (data) => {
     return dispatch => {
         dispatch(LOGIN_USER_START())
-        fetch('http://localhost:50000/login_user', {
+        fetch('https://storeplatform.herokuapp.com:50000/login_user', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json" 
