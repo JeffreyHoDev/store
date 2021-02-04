@@ -7,12 +7,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 
-const publicPath = path.join(__dirname,'..','public')
+// const PUBLIC_URL = path.join(__dirname,'..','public')
+const PUBLIC_URL = path.join("https://storeplatform.herokuapp.com/")
+console.log(PUBLIC_URL)
 const saltRounds = 10;
 
 app.use(bodyParser());
 app.use(cors());
-app.use(express.static(publicPath));
+app.use(express.static(PUBLIC_URL));
 
 const knex = require('knex')({
     client: 'pg',
@@ -20,7 +22,7 @@ const knex = require('knex')({
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
+    res.sendFile(path.join(PUBLIC_URL, 'index.html'));
 });
 
 app.post('/verify', (req,res) => {
