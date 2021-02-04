@@ -1,24 +1,27 @@
 const express = require('express')
+const path = require('path')
 const app = express()
-const port = 50000
+const port = process.env.PORT || 50000
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const bcrypt = require('bcrypt');
+
+const publicPath = path.join(__dirname,'..','public')
 const saltRounds = 10;
 
 app.use(bodyParser());
 app.use(cors());
+app.use(express.static(publicPath));
 
 const knex = require('knex')({
     client: 'pg',
     connection: 'postgres://cwesqmxv:oKHQbklcZncbiryREWNMUGi63jY167l-@satao.db.elephantsql.com:5432/cwesqmxv'
 });
 
-app.get('/', (req,res) => {
-    res.send("Hello")
-})
+app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 app.post('/verify', (req,res) => {
     const { email, password } = req.body
