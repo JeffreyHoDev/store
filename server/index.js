@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt');
 
 const PUBLIC_URL = path.join(__dirname,'..','public')
 
-console.log(PUBLIC_URL)
 const saltRounds = 10;
 
 app.use(bodyParser());
@@ -18,7 +17,12 @@ app.use(express.static(PUBLIC_URL));
 
 const knex = require('knex')({
     client: 'pg',
-    connection: 'postgres://cwesqmxv:oKHQbklcZncbiryREWNMUGi63jY167l-@satao.db.elephantsql.com:5432/cwesqmxv'
+    connection: {
+        host: "localhost",
+        user: "postgres",
+        password: "Reunion94!",
+        database: "supplychainmanagement"
+    }
 });
 
 app.get('*', (req, res) => {
@@ -191,6 +195,23 @@ app.post('/fulfill_request', (req,res) => {
     const { request_id, itemObj } = req.body
     knex('request_list').where('request_id', request_id).update('status', 'Fulfilled')
     .then(result => {
+        
+        knex('request_list').select('item_details').where('request_id', request_id)
+        .then(data => {
+            const processedData = JSON.parse(data[0]["item_details"])
+            processedData.map(item => {
+                knex('items_management').select().where('item_id', item.item_id)
+                .then(data => {
+                    const oldQuantity = parseInt(data[0]['available_quantity'])
+                    const newQuantity = oldQuantity - parseInt(item.quantity)
+
+                    knex('items_management').where('item_id', item.item_id).update('available_quantity', newQuantity)
+                    .then(result => console.log(result))
+
+                })
+            })
+        })
+
         if(result === 1){
             const fieldsToInsert = itemObj.map(item => ({
                 "item_name": item.name,
@@ -202,6 +223,8 @@ app.post('/fulfill_request', (req,res) => {
             knex('item_analysis').insert(fieldsToInsert)
             .then(result => res.json(result))
             .catch(err => res.json(err))
+
+            
         }
         else {
             throw ("Error!")
