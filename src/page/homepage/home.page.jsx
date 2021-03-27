@@ -15,7 +15,6 @@ import { FETCH_FOR_PIE_ASYNC, FETCH_FOR_LINE_ASYNC } from '../../redux/chart/cha
 import { FETCH_ITEM_ASYNC } from '../../redux/storeitem/storeitem.action'
 
 
-
 const HomePage = ({ fetch_pie, fetch_line, fetchItem, isFetching, storeItem }) => {
 
     const today = new Date()

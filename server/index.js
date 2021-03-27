@@ -36,6 +36,7 @@ app.post('/verify', (req,res) => {
         'role': 'Admin'
     })
     .then(data => {
+        console.log(data)
         bcrypt.compare(password, data[0].password, function(err, result) {
             if(result){
                 res.json("OK")
@@ -69,19 +70,25 @@ app.post('/login_user', (req,res) => {
         "email": email
     })
     .then(result_fromDB => {
-        bcrypt.compare(password, result_fromDB[0].password, function(err, result) {
-            if(result){
-                const responseData = {
-                    "name": result_fromDB[0]["name"],
-                    "email": result_fromDB[0]["email"],
-                    "role": result_fromDB[0]["role"]
+        if(result_fromDB.length !== 0){
+            bcrypt.compare(password, result_fromDB[0].password, function(err, result) {
+                console.log(result)
+                if(result){
+                    const responseData = {
+                        "name": result_fromDB[0]["name"],
+                        "email": result_fromDB[0]["email"],
+                        "role": result_fromDB[0]["role"]
+                    }
+                    res.json(responseData)
                 }
-                res.json(responseData)
-            }
-            else {
-                res.json("Wrong Credentials")
-            }
-        })
+                else {
+                    res.json("Wrong Credentials")
+                }
+            })
+        }
+        else {
+            res.json("Wrong Credentials")
+        }
     })
     .catch(err => res.json(err))
 })

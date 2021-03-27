@@ -20,6 +20,8 @@ import StoreListPage from './page/storelistpage/storelist.page';
 import UserManagementPage from './page/usermanagementpage/usermanagement.page'
 // End importing page components
 
+import MyDocument from './utilities/pdf'
+
 // Start Importing React Router
 import {
   BrowserRouter as Router,
@@ -36,6 +38,7 @@ const App = ({ isLoggedIn }) => {
   return (
     <Router>
       <div className="App">
+      <MyDocument/>
       <AddItem />
       <AddUser />
       <DeleteUser />

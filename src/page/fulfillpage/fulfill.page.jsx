@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import './fulfill.scss'
 
+import Export from '../../utilities/export'
+
 import { connect } from 'react-redux'
 
 import { ListGroup, Button, Spinner } from 'react-bootstrap'
@@ -8,6 +10,7 @@ import { useParams, Redirect } from 'react-router-dom'
 
 import { FETCH_SINGLEREQUEST_ASYNC } from '../../redux/requestitem/requestitem.action'
 import { FULFILL_REQUEST_ASYNC, CANCEL_REQUEST_ASYNC } from '../../redux/fulfillrequest/fulfillrequest.action'
+
 
 const FulfillPage = ({ redirectTo, errorMessage, fetchSingleRequest, isFetching, requestDetail, itemDetail, fulfillRequest, cancelRequest }) => {
     const { request_id } = useParams()
@@ -43,7 +46,7 @@ const FulfillPage = ({ redirectTo, errorMessage, fetchSingleRequest, isFetching,
                             <h6 name='requestor'>{requestDetail[0]["requestor"]}</h6>
                         </div>
                         {
-                            requestDetail[0].status === "Fulfilled" ? null
+                            requestDetail[0].status === "Fulfilled" ? <Export />
                             :
                             <div className='action-container'>
                                 <Button variant="success" type="button" onClick={() => fulfillRequest(itemDetail, request_id)}>Complete</Button>
