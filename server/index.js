@@ -20,7 +20,7 @@ const knex = require('knex')({
     connection: {
         host: "localhost",
         user: "postgres",
-        password: "[YOUR_DATABSE_PASSWORD]",
+        password: "Reunion94!",
         database: "supplychainmanagement"
     }
 });
@@ -199,8 +199,11 @@ app.post('/fetch_single_request', (req,res) => {
 
 
 app.post('/fulfill_request', (req,res) => {
-    const { request_id, itemObj } = req.body
-    knex('request_list').where('request_id', request_id).update('status', 'Fulfilled')
+    const { request_id, itemObj, collector } = req.body
+    knex('request_list').where('request_id', request_id).update({
+        "status": "Fulfilled",
+        "collector": collector
+    })
     .then(result => {
         
         knex('request_list').select('item_details').where('request_id', request_id)
