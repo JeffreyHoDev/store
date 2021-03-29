@@ -20,7 +20,7 @@ const knex = require('knex')({
     connection: {
         host: "localhost",
         user: "postgres",
-        password: "[YOUR_DATABASE_PASSWORD]",
+        password: "Reunion94!",
         database: "supplychainmanagement"
     }
 });
