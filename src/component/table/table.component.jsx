@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 
 const BasicTable = ({ storeItem, isFetching }) => {
 
-
-
     const [datatable, setDatatable] = React.useState({
         columns: [
           {
